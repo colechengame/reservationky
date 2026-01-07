@@ -608,6 +608,85 @@
             color: var(--brown);
         }
 
+        /* 摺疊面板樣式 */
+        .accordion {
+            margin: 20px 0;
+        }
+
+        .accordion-item {
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .accordion-item:hover {
+            box-shadow: 0 4px 15px rgba(139, 38, 53, 0.2);
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, var(--primary-red) 0%, var(--brown) 100%);
+            color: var(--light-bg);
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, var(--brown) 0%, var(--primary-red) 100%);
+        }
+
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .accordion-icon {
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 3000px;
+            transition: max-height 0.7s ease-in;
+        }
+
+        .accordion-body {
+            padding: 25px;
+        }
+
+        .phase-summary {
+            background: var(--beige);
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--gold);
+        }
+
+        .phase-summary p {
+            margin: 0;
+            line-height: 1.8;
+            color: var(--brown);
+        }
+
         @media (max-width: 768px) {
             .flow-diagram {
                 grid-template-columns: 1fr;
@@ -782,11 +861,23 @@
                             完整流程涵蓋<strong>前置準備、預約派號、客人報到、現場叫號、完成就診</strong>五大階段，<br>
                             並規劃<strong>兩階段實施計畫</strong>，逐步整合 NPOS 簡訊與叫叫我 LINE 自動報到功能。
                         </p>
+                        <p style="margin-top: 15px; color: var(--primary-red); font-weight: bold; text-align: center; font-size: 1.1em;">
+                            👇 點擊各階段標題展開查看詳細流程
+                        </p>
                     </div>
 
-                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
-                        🏗️ 階段一：前置準備作業
-                    </h3>
+                    <div class="accordion">
+                        <!-- 階段一：前置準備作業 -->
+                        <div class="accordion-item active">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <h3>🏗️ 階段一：前置準備作業</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <div class="phase-summary">
+                                        <p><strong>摘要：</strong>店長提供醫師排班 → 醫務秘書設定拷貝班表 → 系統自動建立整月班表</p>
+                                    </div>
 
                     <div class="timeline">
                         <div class="timeline-item">
@@ -831,23 +922,40 @@
                             <div class="timeline-dot"></div>
                         </div>
                     </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
-                        📱 階段二：預約與派號作業
-                    </h3>
+                        <!-- 階段二：預約與派號作業 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <h3>📱 階段二：預約與派號作業（含第一階段實施）</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <div class="phase-summary">
+                                        <p><strong>摘要：</strong>現場人員協助預約 → 系統自動派號 → <span class="badge warning">第一階段</span> NPOS 簡訊通知派號</p>
+                                    </div>
 
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-content">
-                                <h3>步驟 4️⃣ 客人線上預約</h3>
-                                <p style="margin: 10px 0;">客人透過門診 On 系統選擇：</p>
+                                <h3>步驟 4️⃣ 現場人員協助預約</h3>
+                                <p style="margin: 10px 0;">現場人員（使用者）透過門診 On 系統協助客人預約：</p>
                                 <ul style="line-height: 2;">
-                                    <li>📅 <strong>日期</strong>：選擇就診日期</li>
+                                    <li>📅 <strong>日期</strong>：選擇客人希望的就診日期</li>
                                     <li>🏥 <strong>門市</strong>：選擇就診分院</li>
-                                    <li>🚪 <strong>診間</strong>：依班表顯示可預約診間</li>
+                                    <li>🚪 <strong>診間</strong>：依班表顯示可預約診間（診一/診二）</li>
                                     <li>⏰ <strong>時段</strong>：早診/午診/晚診</li>
                                     <li>🕐 <strong>時間</strong>：具體預約時間</li>
+                                    <li>👤 <strong>客人資料</strong>：輸入客人基本資料</li>
                                 </ul>
+                                <div class="info-box" style="margin-top: 15px;">
+                                    <p style="font-weight: bold; color: var(--primary-green);">
+                                        ✅ 客人不直接操作系統，由現場人員協助完成預約
+                                    </p>
+                                </div>
                             </div>
                             <div class="timeline-dot"></div>
                         </div>
@@ -890,10 +998,21 @@
                             <div class="timeline-dot"></div>
                         </div>
                     </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
-                        🏥 階段三：到院報到作業
-                    </h3>
+                        <!-- 階段三：到院報到作業 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <h3>🏥 階段三：到院報到作業（含第二階段規劃）</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <div class="phase-summary">
+                                        <p><strong>摘要：</strong><span class="badge danger">第二階段</span> 叫叫我短網址 LINE 自動報到 → 客人到院掃描報到</p>
+                                    </div>
 
                     <div class="timeline">
                         <div class="timeline-item">
@@ -929,10 +1048,21 @@
                             <div class="timeline-dot"></div>
                         </div>
                     </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
-                        📟 階段四：現場叫號作業
-                    </h3>
+                        <!-- 階段四：現場叫號作業 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <h3>📟 階段四：現場叫號作業</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <div class="phase-summary">
+                                        <p><strong>摘要：</strong>雲端叫號機叫號 → 雙診同步顯示 → LINE 推播通知</p>
+                                    </div>
 
                     <div class="timeline">
                         <div class="timeline-item">
@@ -949,10 +1079,21 @@
                             <div class="timeline-dot"></div>
                         </div>
                     </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
-                        ✅ 階段五：完成就診
-                    </h3>
+                        <!-- 階段五：完成就診 -->
+                        <div class="accordion-item">
+                            <div class="accordion-header" onclick="toggleAccordion(this)">
+                                <h3>✅ 階段五：完成就診</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-body">
+                                    <div class="phase-summary">
+                                        <p><strong>摘要：</strong>依派號進入診間 → 醫師診療 → 系統記錄 → 完成流程</p>
+                                    </div>
 
                     <div class="timeline">
                         <div class="timeline-item">
@@ -967,6 +1108,10 @@
                                 </ul>
                             </div>
                             <div class="timeline-dot"></div>
+                        </div>
+                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1666,6 +1811,21 @@
     <script>
         // 設定今天日期為預設值
         document.getElementById('date').valueAsDate = new Date();
+
+        // 摺疊面板切換
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+
+            // 關閉所有其他面板
+            const allItems = document.querySelectorAll('.accordion-item');
+            allItems.forEach(i => i.classList.remove('active'));
+
+            // 如果原本是關閉的，則打開當前面板
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
 
         // Tab 切換
         function showTab(tabName) {
