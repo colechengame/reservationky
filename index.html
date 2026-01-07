@@ -1690,101 +1690,127 @@
 
                     <div class="test-cases">
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 1｜新增單一預約</h4>
-                            <p><strong>操作：</strong>新增 14:00 預約</p>
+                            <h4>📋 Case 1｜首次預約場景 - 會員第一次建立預約</h4>
+                            <p><strong>🎬 情境：</strong>王小姐透過現場人員首次預約中壢京都堂診一午診</p>
+                            <p><strong>⚙️ 操作：</strong>新增 14:00 預約</p>
+                            <p><strong>📍 派號池：</strong>2026/01/15 + 中壢京都堂 + 診一 + 午診 + 王小姐</p>
                             <div class="result">
                                 <p>✅ 預期結果：派號 <span class="highlight">1</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：首次預約，獲得該派號池的第一個奇數序號</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：這是王小姐在此派號池的首次預約，系統自動分配該派號池的第一個奇數序號「1」。派號會顯示為「診一/午診/1」</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 2｜新增更早預約（同池）</h4>
-                            <p><strong>原本：</strong>16:00（1 號）</p>
-                            <p><strong>操作：</strong>新增 14:00</p>
+                            <h4>🔄 Case 2｜同池加掛更早時段 - 派號搬移不重排</h4>
+                            <p><strong>🎬 情境：</strong>王小姐原本預約 16:00，後來想提前看診</p>
+                            <p><strong>📌 原本：</strong>16:00（派號 1）</p>
+                            <p><strong>⚙️ 操作：</strong>新增更早的 14:00 預約</p>
+                            <p><strong>📍 派號池：</strong>同一派號池（日期、門市、診間、時段、會員都相同）</p>
                             <div class="result">
-                                <p>✅ 預期結果：14:00 顯示 <span class="highlight">1 號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：同派號池內，派號搬移到更早的預約，號碼不變</p>
+                                <p>✅ 預期結果：14:00 顯示 <span class="highlight">1 號</span>，16:00 不顯示派號</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：同派號池內，會員只有一個派號。派號「1」自動搬移到最早的預約（14:00），16:00 成為備用預約不顯示派號</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 3｜取消最早但仍有其他預約</h4>
-                            <p><strong>原本：</strong>14:00（1 號）、15:00</p>
-                            <p><strong>操作：</strong>取消 14:00</p>
+                            <h4>❌ Case 3｜取消主預約但仍留在池內 - 派號轉移</h4>
+                            <p><strong>🎬 情境：</strong>王小姐取消了最早的預約，但還有其他預約</p>
+                            <p><strong>📌 原本：</strong>14:00（派號 1，主預約）、15:00（備用預約）</p>
+                            <p><strong>⚙️ 操作：</strong>取消 14:00</p>
+                            <p><strong>🔍 判斷：</strong>有效預約數從 2 變成 1，未出現「有效預約數 = 0」</p>
                             <div class="result">
                                 <p>✅ 預期結果：15:00 顯示 <span class="highlight">1 號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：未離池，派號轉移到剩餘最早的預約</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：王小姐未完全離開派號池，派號「1」自動轉移到剩餘最早的預約（15:00），15:00 成為新的主預約</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 4｜取消最早後新增更早（不中斷）</h4>
-                            <p><strong>原本：</strong>14:00（1 號）、15:00</p>
-                            <p><strong>操作：</strong>取消 14:00 → 新增 13:30</p>
+                            <h4>🔁 Case 4｜取消後快速加掛 - 有備胎不離池</h4>
+                            <p><strong>🎬 情境：</strong>王小姐取消最早預約，但因為還有其他預約，派號不會消失</p>
+                            <p><strong>📌 原本：</strong>14:00（派號 1，主預約）、15:00（備用預約）</p>
+                            <p><strong>⚙️ 操作：</strong>取消 14:00 → 新增 13:30</p>
+                            <p><strong>🔍 判斷：</strong>整個過程中，有效預約數：2 → 1 → 2，從未等於 0</p>
                             <div class="result">
                                 <p>✅ 預期結果：13:30 顯示 <span class="highlight">1 號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：因為 15:00 還在，未離池，派號搬移到 13:30</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：因為 15:00 一直存在，王小姐始終留在派號池內，派號「1」先轉移到 15:00，再搬移到新增的 13:30</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 5｜全取消後再新增 ⚠️</h4>
-                            <p><strong>原本：</strong>14:00（1 號）</p>
-                            <p><strong>操作：</strong>取消 → 新增 13:30</p>
+                            <h4>⚠️ Case 5｜完全離池後重新進入 - 派號作廢重新派發</h4>
+                            <p><strong>🎬 情境：</strong>王小姐取消所有預約後，又重新預約（改變心意）</p>
+                            <p><strong>📌 原本：</strong>14:00（派號 1，唯一預約）</p>
+                            <p><strong>⚙️ 操作：</strong>取消 14:00 → 新增 13:30</p>
+                            <p><strong>🔍 判斷：</strong>有效預約數：1 → 0 → 1，出現「有效預約數 = 0」的時間點</p>
                             <div class="result">
-                                <p>✅ 預期結果：<span class="highlight">重新派號</span>（不可回原號）</p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：全部取消後有效預約數 = 0，已離池，原派號作廢</p>
+                                <p>✅ 預期結果：13:30 獲得 <span class="highlight">新的派號</span>（假設此時派號池最大號為 3，則獲得 5 號）</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：王小姐完全離開派號池，原派號「1」永久作廢。重新進入時，系統按照派號池當前最大號繼續遞增派發（不回收舊號）</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 6｜同日跨時段再回來 ⚠️</h4>
-                            <p><strong>原本：</strong>午診 14:00（1 號）</p>
-                            <p><strong>操作：</strong>改晚診 → 再改回午診</p>
+                            <h4>⚠️ Case 6｜跨時段改期 - 不同派號池重新派號</h4>
+                            <p><strong>🎬 情境：</strong>王小姐從午診改到晚診，又改回午診</p>
+                            <p><strong>📌 原本：</strong>午診 14:00（派號 1）</p>
+                            <p><strong>⚙️ 操作：</strong>改為晚診 18:00 → 再改回午診 14:00</p>
+                            <p><strong>🔍 判斷：</strong>午診派號池出現「有效預約數 = 0」（改到晚診時）</p>
                             <div class="result">
-                                <p>✅ 預期結果：午診<span class="highlight">重新派號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：跨時段視為不同派號池，需重新派號</p>
+                                <p>✅ 預期結果：回到午診時需<span class="highlight">重新派號</span>（假設午診最大號為 5，則獲得 7 號）</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：午診和晚診是不同派號池（時段不同）。離開午診池時，午診派號「1」作廢。重回午診池需重新派號</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 7｜取消非最早預約</h4>
-                            <p><strong>原本：</strong>14:00（1 號）、15:00</p>
-                            <p><strong>操作：</strong>取消 15:00</p>
+                            <h4>🗑️ Case 7｜取消非主預約 - 派號完全不受影響</h4>
+                            <p><strong>🎬 情境：</strong>王小姐取消了備用預約，保留主預約</p>
+                            <p><strong>📌 原本：</strong>14:00（派號 1，主預約）、15:00（備用預約）</p>
+                            <p><strong>⚙️ 操作：</strong>取消 15:00</p>
+                            <p><strong>🔍 判斷：</strong>主預約未變動，有效預約數從 2 變成 1，未離池</p>
                             <div class="result">
                                 <p>✅ 預期結果：14:00 仍為 <span class="highlight">1 號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：主預約未變，派號維持不變</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：取消備用預約不影響主預約和派號，王小姐的派號「1」維持在 14:00 上</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 8｜連續新增多筆更早</h4>
-                            <p><strong>原本：</strong>16:00（1 號）</p>
-                            <p><strong>操作：</strong>新增 15:00 → 新增 14:00</p>
+                            <h4>➕ Case 8｜連續加掛多個更早時段 - 派號持續前移</h4>
+                            <p><strong>🎬 情境：</strong>王小姐不斷嘗試預約更早的時段</p>
+                            <p><strong>📌 原本：</strong>16:00（派號 1）</p>
+                            <p><strong>⚙️ 操作：</strong>新增 15:00 → 新增 14:00</p>
+                            <p><strong>🔍 過程：</strong>
+                                <br>• 新增 15:00 後：派號「1」搬移到 15:00
+                                <br>• 新增 14:00 後：派號「1」再搬移到 14:00
+                            </p>
                             <div class="result">
-                                <p>✅ 預期結果：14:00 顯示 <span class="highlight">1 號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：派號持續搬移到最早的預約</p>
+                                <p>✅ 預期結果：14:00 顯示 <span class="highlight">1 號</span>，15:00 和 16:00 不顯示派號</p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：派號始終顯示在最早的預約上，隨著新增更早預約，派號會持續前移，但號碼保持不變</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 9｜快速全取消再新增（秒級）⚠️</h4>
-                            <p><strong>原本：</strong>14:00（1 號）</p>
-                            <p><strong>操作：</strong>取消 → 立即新增</p>
+                            <h4>⏱️ Case 9｜秒級操作的離池判定 - 時間無關緊要</h4>
+                            <p><strong>🎬 情境：</strong>王小姐快速取消再預約（可能是誤操作後立即修正）</p>
+                            <p><strong>📌 原本：</strong>14:00（派號 1，唯一預約）</p>
+                            <p><strong>⚙️ 操作：</strong>取消 14:00 → 立即新增 14:30（間隔 1 秒）</p>
+                            <p><strong>🔍 判斷：</strong>即使只有 1 秒，仍出現「有效預約數 = 0」的時間點</p>
                             <div class="result">
-                                <p>✅ 預期結果：<span class="highlight">重新派號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：即使是秒級，只要出現過有效預約數 = 0，就需重新派號</p>
+                                <p>✅ 預期結果：14:30 需<span class="highlight">重新派號</span></p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：離池判定不考慮時間間隔，只要曾出現「有效預約數 = 0」就視為離池。即使是秒級操作，原派號也會作廢</p>
                             </div>
                         </div>
 
                         <div class="test-case" onclick="toggleTest(this)">
-                            <h4>Case 10｜跨門市/跨診間</h4>
-                            <p><strong>原本：</strong>中壢京都堂/診一/午診（1 號）</p>
-                            <p><strong>操作：</strong>新增板橋京都堂/診二/午診</p>
+                            <h4>🏢 Case 10｜不同派號池的獨立性 - 序列互不影響</h4>
+                            <p><strong>🎬 情境：</strong>王小姐同時在不同門市/診間預約</p>
+                            <p><strong>📌 原本：</strong>中壢京都堂/診一/午診/14:00（派號 1）</p>
+                            <p><strong>⚙️ 操作：</strong>新增 板橋京都堂/診二/午診/14:00</p>
+                            <p><strong>🔍 派號池差異：</strong>
+                                <br>• 派號池 A：中壢 + 診一
+                                <br>• 派號池 B：板橋 + 診二
+                            </p>
                             <div class="result">
-                                <p>✅ 預期結果：各自獨立派號，都是 <span class="highlight">1 號</span></p>
-                                <p style="margin-top: 10px; color: var(--brown);">說明：不同派號池（門市或診間不同），序列完全獨立</p>
+                                <p>✅ 預期結果：兩個預約各自獨立派號，都是 <span class="highlight">1 號</span></p>
+                                <p style="margin-top: 10px; color: var(--brown);">💡 說明：不同門市或不同診間構成不同派號池，序列完全獨立。王小姐可以同時在多個派號池中都是「1 號」</p>
                             </div>
                         </div>
                     </div>
