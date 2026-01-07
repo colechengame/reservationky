@@ -776,15 +776,75 @@
                 <div class="section">
                     <h2>🔄 從預約到派號完整流程</h2>
 
+                    <div class="info-box">
+                        <h4>📋 流程總覽</h4>
+                        <p style="font-size: 1.1em; line-height: 1.8;">
+                            完整流程涵蓋<strong>前置準備、預約派號、客人報到、現場叫號、完成就診</strong>五大階段，<br>
+                            並規劃<strong>兩階段實施計畫</strong>，逐步整合 NPOS 簡訊與叫叫我 LINE 自動報到功能。
+                        </p>
+                    </div>
+
+                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
+                        🏗️ 階段一：前置準備作業
+                    </h3>
+
                     <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-content">
-                                <h3>步驟 1️⃣ 客人線上預約</h3>
-                                <p style="margin: 10px 0;">客人透過系統選擇：</p>
+                                <h3>步驟 1️⃣ 店長提供醫師排班資訊</h3>
+                                <p style="margin: 10px 0;">店長確認並提供醫師配置：</p>
+                                <ul style="line-height: 2;">
+                                    <li>🩺 <strong>診一醫師</strong>：確認診間一的值班醫師</li>
+                                    <li>🩺 <strong>診二醫師</strong>：確認診間二的值班醫師</li>
+                                    <li>📅 <strong>排班週期</strong>：提供完整週期排班表</li>
+                                    <li>📝 <strong>交付醫務秘書</strong>：將資訊提供給醫務秘書建檔</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3>步驟 2️⃣ 醫務秘書設定拷貝班表</h3>
+                                <p style="margin: 10px 0;">醫務秘書進行系統維護：</p>
+                                <ul style="line-height: 2;">
+                                    <li>💻 <strong>登入醫務管理系統</strong>：進入班表維護功能</li>
+                                    <li>⚙️ <strong>拷貝班表設定</strong>：設定診一/診二對應醫師</li>
+                                    <li>📋 <strong>確認時段配置</strong>：設定早診/午診/晚診</li>
+                                    <li>✅ <strong>儲存設定</strong>：完成拷貝班表維護</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3>步驟 3️⃣ 系統自動建立整月班表</h3>
+                                <p style="margin: 10px 0;">系統根據設定自動生成：</p>
+                                <ul style="line-height: 2;">
+                                    <li>🔄 <strong>讀取拷貝班表</strong>：系統讀取維護的班表設定</li>
+                                    <li>📆 <strong>自動展開整月</strong>：依設定建立未來整月班表</li>
+                                    <li>🩺 <strong>醫師診間對應</strong>：自動對應診一/診二醫師</li>
+                                    <li>✅ <strong>班表生效</strong>：最新班表即時生效供預約使用</li>
+                                </ul>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
+                        📱 階段二：預約與派號作業
+                    </h3>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3>步驟 4️⃣ 客人線上預約</h3>
+                                <p style="margin: 10px 0;">客人透過門診 On 系統選擇：</p>
                                 <ul style="line-height: 2;">
                                     <li>📅 <strong>日期</strong>：選擇就診日期</li>
                                     <li>🏥 <strong>門市</strong>：選擇就診分院</li>
-                                    <li>🚪 <strong>診間</strong>：診一或診二</li>
+                                    <li>🚪 <strong>診間</strong>：依班表顯示可預約診間</li>
                                     <li>⏰ <strong>時段</strong>：早診/午診/晚診</li>
                                     <li>🕐 <strong>時間</strong>：具體預約時間</li>
                                 </ul>
@@ -794,13 +854,13 @@
 
                         <div class="timeline-item">
                             <div class="timeline-content">
-                                <h3>步驟 2️⃣ 系統自動派號</h3>
-                                <p style="margin: 10px 0;">根據派號池規則自動分配：</p>
+                                <h3>步驟 5️⃣ 系統自動派號</h3>
+                                <p style="margin: 10px 0;">現場人員透過門診 On 預約順序自動產生：</p>
                                 <ul style="line-height: 2;">
                                     <li>🧩 <strong>派號池</strong> = 日期+門市+診間+時段+會員</li>
                                     <li>🔢 <strong>序號規則</strong>：派發奇數 1, 3, 5, 7...</li>
-                                    <li>📊 <strong>排序依據</strong>：依預約建立時間排序</li>
-                                    <li>🏷️ <strong>顯示格式</strong>：診間/時段/序號</li>
+                                    <li>📊 <strong>排序依據</strong>：依預約 created_at 時間排序</li>
+                                    <li>🏷️ <strong>顯示格式</strong>：診間對應的系統自動派號</li>
                                 </ul>
                                 <div class="info-box" style="margin-top: 15px;">
                                     <p style="text-align: center; font-weight: bold; color: var(--primary-red);">
@@ -813,45 +873,137 @@
 
                         <div class="timeline-item">
                             <div class="timeline-content">
-                                <h3>步驟 3️⃣ 客人到院報到</h3>
+                                <h3>步驟 6️⃣ 第一階段：NPOS 簡訊通知</h3>
+                                <p style="margin: 10px 0;"><span class="badge warning">第一階段實施</span></p>
+                                <ul style="line-height: 2;">
+                                    <li>📲 <strong>自動接入 NPOS</strong>：系統預約產生的派號自動接入</li>
+                                    <li>💬 <strong>預約簡訊發送</strong>：將派號資訊加入預約簡訊</li>
+                                    <li>📝 <strong>簡訊內容</strong>：包含日期、時段、診間、派號</li>
+                                    <li>✅ <strong>客人收到通知</strong>：客人透過簡訊得知派號資訊</li>
+                                </ul>
+                                <div class="info-box success" style="margin-top: 15px;">
+                                    <p style="font-weight: bold; color: var(--primary-green);">
+                                        ✅ 第一階段讓客人透過簡訊提前知道派號，減少現場詢問
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
+                        🏥 階段三：到院報到作業
+                    </h3>
+
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3>步驟 7️⃣ 第二階段：LINE 自動報到</h3>
+                                <p style="margin: 10px 0;"><span class="badge danger">第二階段實施</span></p>
+                                <ul style="line-height: 2;">
+                                    <li>🔗 <strong>叫叫我短網址</strong>：配合叫叫我提供短網址</li>
+                                    <li>📱 <strong>點擊自動引導</strong>：客人點擊後自動引導至 LINE</li>
+                                    <li>✅ <strong>LINE 自動報到</strong>：透過 LINE 自動完成報到</li>
+                                    <li>🔔 <strong>主動提醒進度</strong>：系統主動推播號碼進度給客人</li>
+                                </ul>
+                                <div class="info-box danger" style="margin-top: 15px;">
+                                    <p style="font-weight: bold;">
+                                        ⚠️ 第二階段需與叫叫我系統整合，提供更完整的自動化報到體驗
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-content">
+                                <h3>步驟 8️⃣ 客人到院掃描報到</h3>
                                 <p style="margin: 10px 0;">客人到達診所進行報到：</p>
                                 <ul style="line-height: 2;">
                                     <li>📱 <strong>掃描 QR Code</strong>：現場掃描報到碼</li>
-                                    <li>✅ <strong>LINE 報到</strong>：透過 LINE 完成報到</li>
+                                    <li>✅ <strong>LINE 完成報到</strong>：透過 LINE 確認報到</li>
                                     <li>👀 <strong>查看進度</strong>：即時查看目前號碼與等候狀態</li>
-                                    <li>🔔 <strong>接收通知</strong>：等待叫號推播通知</li>
+                                    <li>🔔 <strong>接收推播通知</strong>：等待叫號推播提醒</li>
                                 </ul>
                             </div>
                             <div class="timeline-dot"></div>
                         </div>
+                    </div>
 
+                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
+                        📟 階段四：現場叫號作業
+                    </h3>
+
+                    <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-content">
-                                <h3>步驟 4️⃣ 現場叫號作業</h3>
+                                <h3>步驟 9️⃣ 雲端叫號機叫號</h3>
                                 <p style="margin: 10px 0;">現場人員進行叫號：</p>
                                 <ul style="line-height: 2;">
                                     <li>📟 <strong>雲端叫號機</strong>：現場進行叫號操作</li>
-                                    <li>🔄 <strong>雙診同步</strong>：兩診間同步顯示號碼</li>
-                                    <li>📲 <strong>LINE 推播</strong>：系統自動推播通知客人</li>
-                                    <li>💼 <strong>後台監控</strong>：管理端即時監控進度</li>
+                                    <li>🔄 <strong>雙診同步</strong>：診一/診二同步顯示號碼</li>
+                                    <li>📲 <strong>LINE 推播通知</strong>：系統自動推播通知客人</li>
+                                    <li>💼 <strong>後台即時監控</strong>：管理端即時掌握進度</li>
                                 </ul>
                             </div>
                             <div class="timeline-dot"></div>
                         </div>
+                    </div>
 
+                    <h3 style="color: var(--primary-red); margin: 40px 0 20px 0; font-size: 1.5em;">
+                        ✅ 階段五：完成就診
+                    </h3>
+
+                    <div class="timeline">
                         <div class="timeline-item">
                             <div class="timeline-content">
-                                <h3>步驟 5️⃣ 完成就診流程</h3>
+                                <h3>步驟 🔟 完成就診流程</h3>
                                 <p style="margin: 10px 0;">客人完成就診：</p>
                                 <ul style="line-height: 2;">
-                                    <li>🚪 <strong>進入診間</strong>：依號碼進入指定診間</li>
-                                    <li>⚕️ <strong>完成看診</strong>：醫師進行診療</li>
+                                    <li>🚪 <strong>進入診間</strong>：依派號進入對應診間</li>
+                                    <li>⚕️ <strong>醫師診療</strong>：由排班醫師進行診療</li>
                                     <li>📊 <strong>系統記錄</strong>：系統記錄完成狀態</li>
-                                    <li>✅ <strong>結束流程</strong>：完成本次就診</li>
+                                    <li>✅ <strong>結束流程</strong>：完成本次就診流程</li>
                                 </ul>
                             </div>
                             <div class="timeline-dot"></div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2>🎯 分階段實施策略</h2>
+
+                    <div class="rule-cards">
+                        <div class="rule-card" style="border-left-color: var(--primary-green);">
+                            <h3>🚀 第一階段：NPOS 簡訊整合</h3>
+                            <ul style="line-height: 2;">
+                                <li><span class="emoji">✅</span><strong>快速上線</strong>：利用現有 NPOS 簡訊系統</li>
+                                <li><span class="emoji">📲</span><strong>自動發送</strong>：預約完成自動發送派號簡訊</li>
+                                <li><span class="emoji">📝</span><strong>內容明確</strong>：簡訊包含完整派號資訊</li>
+                                <li><span class="emoji">💰</span><strong>成本可控</strong>：使用既有簡訊服務</li>
+                            </ul>
+                        </div>
+
+                        <div class="rule-card" style="border-left-color: var(--accent-red);">
+                            <h3>🎯 第二階段：LINE 自動報到</h3>
+                            <ul style="line-height: 2;">
+                                <li><span class="emoji">🔗</span><strong>短網址整合</strong>：與叫叫我系統整合</li>
+                                <li><span class="emoji">📱</span><strong>LINE 引導</strong>：點擊後自動開啟 LINE</li>
+                                <li><span class="emoji">🤖</span><strong>自動報到</strong>：無需人工操作自動完成</li>
+                                <li><span class="emoji">🔔</span><strong>主動推播</strong>：即時推送號碼進度</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ 實施重點</h4>
+                        <ul style="line-height: 2; margin-top: 10px;">
+                            <li>📍 <strong>第一階段優先</strong>：先確保基本派號簡訊功能穩定運作</li>
+                            <li>📍 <strong>逐步升級</strong>：待第一階段穩定後再導入第二階段</li>
+                            <li>📍 <strong>測試驗證</strong>：每階段都需完整測試後才上線</li>
+                            <li>📍 <strong>使用者體驗</strong>：確保客人操作流程簡單順暢</li>
+                        </ul>
                     </div>
                 </div>
 
