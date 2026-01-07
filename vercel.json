@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/預約派號流程報告.html"
+    }
+  ]
+}
