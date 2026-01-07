@@ -25,7 +25,7 @@
 
 ## 線上訪問
 
-訪問 Vercel 部署版本：[待部署]
+訪問 Vercel 部署版本：https://reservationky-u8vbhv6mg-cole-chengs-projects.vercel.app
 
 ## 授權
 
