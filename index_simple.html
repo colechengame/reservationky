@@ -4,23 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>京都堂預約派號系統 - 完整視覺化報告</title>
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'base',
-            themeVariables: {
-                primaryColor: '#8B2635',
-                primaryTextColor: '#fff',
-                primaryBorderColor: '#C9A961',
-                lineColor: '#654321',
-                secondaryColor: '#2F5233',
-                tertiaryColor: '#F5F1E8',
-                fontSize: '16px'
-            },
-            flowchart: { curve: 'basis', padding: 20 }
-        });
-    </script>
+    <!-- Mermaid已禁用 - 所有图表已改用HTML/CSS实现 -->
     <style>
         * {
             margin: 0;
@@ -28,43 +12,271 @@
             box-sizing: border-box;
         }
 
-        /* 中醫深色風格配色變數 */
+        /* ========================
+           🌴 南洋熱帶風格主題
+           ======================== */
+        :root[data-theme="tropical"],
         :root {
-            --primary-red: #D4756E;      /* 淺棗紅色 */
-            --primary-green: #7CB342;    /* 淺墨綠色 */
-            --gold: #FFD54F;             /* 明金色 */
-            --brown: #654321;            /* 深褐色 */
-            --dark-bg: #1a1410;          /* 深褐黑 */
-            --card-bg: #2d2419;          /* 卡片深褐 */
-            --accent-red: #E57373;       /* 亮紅色 */
-            --dark-green: #1C3A1F;       /* 深綠色 */
-            --text-light: #E8DCC4;       /* 米黃文字 */
-            --text-secondary: #B8A888;   /* 次要文字 */
+            --tropical-green: #2E7D32;   /* 棕櫚綠 */
+            --tropical-teal: #00897B;    /* 熱帶青綠 */
+            --ocean-blue: #0288D1;       /* 海洋藍 */
+            --sunset-orange: #FF6F00;    /* 日落橙 */
+            --coral-pink: #FF6B9D;       /* 珊瑚粉 */
+            --golden-sun: #FFA726;       /* 陽光金 */
+            --bamboo-brown: #6D4C41;     /* 竹子褐 */
+            --cream-bg: #FFF8E1;         /* 奶油背景 */
+            --card-bg: #FFFFFF;          /* 卡片白 */
+            --light-green: #81C784;      /* 淺綠 */
+            --text-dark: #2C3E50;        /* 深色文字 */
+            --text-secondary: #546E7A;   /* 次要文字 */
+            --tropical-shadow: rgba(0, 137, 123, 0.15);  /* 熱帶陰影 */
+
+            /* 主题通用变量 */
+            --primary-color: var(--tropical-teal);
+            --secondary-color: var(--tropical-green);
+            --accent-color: var(--golden-sun);
+            --danger-color: var(--coral-pink);
+            --bg-gradient-start: #FFF8E1;
+            --bg-gradient-mid: #FFECB3;
+            --bg-gradient-end: #FFE0B2;
+            --card-alpha: 0.75;
+            --nav-alpha: 0.8;
+            --text-color: var(--text-dark);
+            --text-color-secondary: var(--text-secondary);
+            --shadow-color: var(--tropical-shadow);
+        }
+
+        /* ========================
+           🚀 深色科幻風格主題（優化對比度版本）
+           ======================== */
+        :root[data-theme="cyber"] {
+            --cyber-purple: #A78BFA;      /* 霓虹紫（提亮） */
+            --cyber-blue: #60A5FA;        /* 電子藍（提亮） */
+            --cyber-cyan: #22D3EE;        /* 青色光（提亮） */
+            --cyber-pink: #F472B6;        /* 賽博粉（提亮） */
+            --cyber-orange: #FBBA6D;      /* 能量橙（提亮） */
+            --cyber-green: #34D399;       /* 矩陣綠（提亮） */
+            --cyber-red: #F87171;         /* 警告紅（提亮） */
+            --dark-bg: #0F0F23;           /* 深空背景 */
+            --darker-bg: #050510;         /* 更深背景 */
+            --card-dark: #1A1A2E;         /* 卡片深色 */
+            --card-darker: #16162A;       /* 卡片更深 */
+            --text-light: #F1F5F9;        /* 淺色文字（提高到接近白色） */
+            --text-gray: #CBD5E1;         /* 灰色文字（大幅提亮） */
+            --text-bright: #FFFFFF;       /* 純白文字 */
+            --cyber-shadow: rgba(139, 92, 246, 0.3);  /* 科幻陰影 */
+            --glow-cyan: rgba(34, 211, 238, 0.6);
+            --glow-purple: rgba(167, 139, 250, 0.6);
+
+            /* 主题通用变量 */
+            --primary-color: var(--cyber-cyan);
+            --secondary-color: var(--cyber-purple);
+            --accent-color: var(--cyber-pink);
+            --danger-color: var(--cyber-red);
+            --bg-gradient-start: #0F0F23;
+            --bg-gradient-mid: #1A1A2E;
+            --bg-gradient-end: #16162A;
+            --card-alpha: 0.7;
+            --nav-alpha: 0.85;
+            --text-color: var(--text-light);
+            --text-color-secondary: var(--text-gray);
+            --shadow-color: var(--cyber-shadow);
         }
 
         body {
             font-family: 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
-            background: linear-gradient(135deg, #1a1410 0%, #2d2419 100%);
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-mid) 50%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed;
             min-height: 100vh;
             line-height: 1.6;
-            color: var(--text-light);
+            color: var(--text-color);
+            position: relative;
+            transition: background 0.5s ease, color 0.3s ease;
+        }
+
+        /* 背景裝飾層 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* 南洋風格背景裝飾 */
+        :root[data-theme="tropical"] body::before,
+        :root:not([data-theme]) body::before {
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(0, 137, 123, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 111, 0, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(129, 199, 132, 0.05) 0%, transparent 50%);
+        }
+
+        /* 科幻風格背景裝飾 - 掃描線和光暈效果 */
+        :root[data-theme="cyber"] body::before {
+            background-image:
+                linear-gradient(0deg, transparent 48%, rgba(139, 92, 246, 0.03) 49%, rgba(139, 92, 246, 0.03) 51%, transparent 52%),
+                radial-gradient(circle at 20% 30%, var(--glow-cyan) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, var(--glow-purple) 0%, transparent 40%);
+            background-size: 100% 4px, 100% 100%, 100% 100%;
+            animation: scanlines 8s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 0 100%, 0 0, 0 0; }
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================
+           🎨 主題切換按鈕
+           ======================== */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+
+        /* 南洋主題切換按鈕 - 白色系 */
+        :root[data-theme="tropical"] .theme-toggle,
+        :root:not([data-theme]) .theme-toggle {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 137, 123, 0.3);
+        }
+
+        /* 科幻主題切換按鈕 - 深色系 */
+        :root[data-theme="cyber"] .theme-toggle {
+            background: rgba(26, 26, 46, 0.95);
+            border: 1px solid rgba(167, 139, 250, 0.4);
+            box-shadow: 0 8px 32px var(--cyber-shadow), 0 0 20px var(--glow-purple);
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-btn:hover::before {
+            opacity: 0.2;
+        }
+
+        .theme-btn.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            box-shadow: 0 4px 16px var(--shadow-color);
+            transform: scale(1.05);
+        }
+
+        .theme-btn.active span {
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+        }
+
+        .theme-btn span {
+            position: relative;
+            z-index: 1;
+            transition: filter 0.3s ease;
+        }
+
+        /* 主题切换动画 */
+        @keyframes themeSwitch {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        body.theme-switching {
+            animation: themeSwitch 0.5s ease;
         }
 
         .hero {
             text-align: center;
             padding: 60px 20px;
             color: white;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 10px 40px var(--shadow-color);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* 南洋主题 Hero */
+        :root[data-theme="tropical"] .hero,
+        :root:not([data-theme]) .hero {
+            background: linear-gradient(135deg, rgba(0, 137, 123, 0.85) 0%, rgba(46, 125, 50, 0.85) 100%);
+        }
+
+        /* 科幻主题 Hero */
+        :root[data-theme="cyber"] .hero {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.9) 0%, rgba(6, 182, 212, 0.9) 100%);
+        }
+
+        :root[data-theme="cyber"] .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.1) 50%, transparent 100%);
+            animation: heroScan 3s ease-in-out infinite;
+        }
+
+        @keyframes heroScan {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
         }
 
         .hero h1 {
             font-size: 3.5em;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 20px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 20px rgba(0,0,0,0.2);
+            font-weight: 900;
         }
 
         .hero-subtitle {
             font-size: 1.4em;
             opacity: 0.95;
+            font-weight: 500;
         }
 
         /* 数据大屏 */
@@ -78,19 +290,42 @@
         }
 
         .big-stat {
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 169, 97, 0.2);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 40px 25px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 南洋主題大數據卡片 - 白色系 */
+        :root[data-theme="tropical"] .big-stat,
+        :root:not([data-theme]) .big-stat {
+            background: var(--card-bg);
+            border: 3px solid var(--tropical-teal);
+            box-shadow: 0 8px 25px var(--tropical-shadow);
+        }
+
+        .big-stat::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 137, 123, 0.1) 0%, transparent 70%);
             transition: all 0.3s;
         }
 
         .big-stat:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(212, 117, 110, 0.3);
-            border-color: var(--gold);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 137, 123, 0.25);
+            border-color: var(--golden-sun);
+        }
+
+        .big-stat:hover::before {
+            top: -20%;
+            right: -20%;
         }
 
         .big-stat-icon {
@@ -99,29 +334,47 @@
             display: block;
         }
 
+        .big-stat-icon {
+            position: relative;
+            z-index: 1;
+        }
+
         .big-stat-value {
             font-size: 2.8em;
             font-weight: 900;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--primary-red) 100%);
+            background: linear-gradient(135deg, var(--tropical-teal) 0%, var(--ocean-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
         }
 
         .big-stat-label {
             font-size: 1.1em;
             color: var(--text-secondary);
             font-weight: 600;
+            position: relative;
+            z-index: 1;
         }
 
-        /* 导航 */
+        /* 导航 - Apple 毛玻璃 */
         .nav {
-            background: var(--card-bg);
-            border-bottom: 2px solid rgba(201, 169, 97, 0.3);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        /* 南洋主題導航 - 白色系 */
+        :root[data-theme="tropical"] .nav,
+        :root:not([data-theme]) .nav {
+            background: rgba(255, 255, 255, 0.8);
+            border-bottom: 1px solid rgba(0, 137, 123, 0.2);
+            box-shadow: 0 1px 20px rgba(0, 137, 123, 0.1);
         }
 
         .nav-tabs {
@@ -144,19 +397,21 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            border-bottom: 3px solid transparent;
+            border-bottom: 4px solid transparent;
             color: var(--text-secondary);
         }
 
         .nav-tab:hover {
-            background: rgba(212, 117, 110, 0.15);
-            color: var(--gold);
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 137, 123, 0.1) 100%);
+            color: var(--tropical-teal);
+            transform: translateY(-2px);
         }
 
         .nav-tab.active {
-            color: var(--gold);
-            border-bottom-color: var(--gold);
-            background: rgba(255, 213, 79, 0.1);
+            color: var(--tropical-teal);
+            border-bottom-color: var(--golden-sun);
+            background: linear-gradient(180deg, transparent 0%, rgba(255, 167, 38, 0.15) 100%);
+            font-weight: 700;
         }
 
         /* 主容器 */
@@ -180,14 +435,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 卡片 */
+        /* 卡片 - Apple 毛玻璃 + 主題適配 */
         .card {
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 169, 97, 0.2);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 35px;
             margin-bottom: 30px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            transition: all 0.3s ease;
+        }
+
+        /* 南洋主題 - 使用白色背景 */
+        :root[data-theme="tropical"] .card,
+        :root:not([data-theme]) .card {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(0, 137, 123, 0.15);
+            box-shadow: 0 8px 32px var(--tropical-shadow);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--tropical-green) 0%, var(--tropical-teal) 50%, var(--ocean-blue) 100%);
         }
 
         .card-header {
@@ -195,36 +470,62 @@
             align-items: center;
             margin-bottom: 25px;
             padding-bottom: 20px;
-            border-bottom: 3px solid rgba(201, 169, 97, 0.3);
+            border-bottom: 3px solid var(--light-green);
+            position: relative;
+            z-index: 1;
         }
 
         .card-icon {
             font-size: 2.5em;
             margin-right: 20px;
+            filter: drop-shadow(2px 2px 4px var(--tropical-shadow));
         }
 
         .card-title {
             font-size: 2em;
             font-weight: 700;
-            color: var(--text-light);
+            color: var(--tropical-green);
         }
 
         /* 流程图容器 */
         .diagram-box {
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 169, 97, 0.2);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 35px;
             margin: 25px 0;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* 南洋主題流程圖容器 - 白色系 */
+        :root[data-theme="tropical"] .diagram-box,
+        :root:not([data-theme]) .diagram-box {
+            background: var(--card-bg);
+            border: 2px solid var(--tropical-teal);
+            box-shadow: 0 10px 30px var(--tropical-shadow);
+        }
+
+        .diagram-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--golden-sun) 0%, var(--coral-pink) 50%, var(--sunset-orange) 100%);
         }
 
         .diagram-title {
             font-size: 2em;
             font-weight: 700;
-            color: var(--gold);
+            background: linear-gradient(135deg, var(--tropical-green) 0%, var(--tropical-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 25px;
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
 
         /* 图标网格 */
@@ -236,55 +537,95 @@
         }
 
         .icon-card {
-            background: linear-gradient(135deg, rgba(45,36,25,0.95) 0%, rgba(35,28,20,0.85) 100%);
-            border: 1px solid rgba(201, 169, 97, 0.2);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 南洋主題圖標卡片 - 白色系漸變 */
+        :root[data-theme="tropical"] .icon-card,
+        :root:not([data-theme]) .icon-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 248, 225, 0.9) 100%);
+            border: 2px solid var(--tropical-teal);
+            box-shadow: 0 5px 20px var(--tropical-shadow);
+        }
+
+        .icon-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 137, 123, 0.05) 0%, transparent 70%);
+            transition: all 0.5s;
+            transform: scale(0);
+        }
+
+        .icon-card:hover::before {
+            transform: scale(1);
         }
 
         .icon-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--gold);
-            box-shadow: 0 12px 35px rgba(255, 213, 79, 0.3);
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--golden-sun);
+            box-shadow: 0 15px 40px rgba(255, 167, 38, 0.3);
         }
 
         .icon-card-icon {
             font-size: 4em;
             margin-bottom: 15px;
             display: block;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(2px 2px 4px var(--tropical-shadow));
         }
 
         .icon-card-title {
             font-size: 1.4em;
             font-weight: 700;
-            color: var(--text-light);
+            color: var(--tropical-green);
             margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
         }
 
         .icon-card-text {
             font-size: 1em;
             color: var(--text-secondary);
             line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
 
-        /* 规则卡片 */
+        /* 规则卡片 - Apple 风格毛玻璃 */
         .rule-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 169, 97, 0.2);
-            border-radius: 15px;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
             padding: 30px;
             margin: 20px 0;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            border-left: 6px solid var(--gold);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .rule-card:hover {
+        /* 南洋主題規則卡片 - 白色系 */
+        :root[data-theme="tropical"] .rule-card,
+        :root:not([data-theme]) .rule-card {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 137, 123, 0.2);
+            box-shadow: 0 8px 32px var(--tropical-shadow);
+            border-left: 5px solid var(--tropical-teal);
+        }
+
+        :root[data-theme="tropical"] .rule-card:hover,
+        :root:not([data-theme]) .rule-card:hover {
             transform: translateX(10px);
-            box-shadow: 0 10px 35px rgba(139, 38, 53, 0.2);
+            box-shadow: 0 12px 40px rgba(0, 137, 123, 0.25);
+            border-left-color: var(--golden-sun);
+            background: rgba(255, 255, 255, 0.85);
         }
 
         .rule-header {
@@ -297,7 +638,7 @@
         .rule-number {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--brown) 100%);
+            background: linear-gradient(135deg, var(--tropical-teal) 0%, var(--ocean-blue) 100%);
             color: white;
             border-radius: 50%;
             display: flex;
@@ -306,12 +647,16 @@
             font-size: 2em;
             font-weight: 900;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px var(--tropical-shadow);
         }
 
         .rule-title {
             font-size: 1.5em;
             font-weight: 700;
-            color: var(--primary-red);
+            background: linear-gradient(135deg, var(--tropical-green) 0%, var(--tropical-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .rule-desc {
@@ -322,10 +667,11 @@
         }
 
         .rule-details {
-            background: rgba(139, 38, 53, 0.05);
+            background: rgba(0, 137, 123, 0.05);
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 15px;
             margin-top: 15px;
+            border: 1px solid rgba(0, 137, 123, 0.1);
         }
 
         .rule-details ul {
@@ -343,24 +689,32 @@
             border-bottom: none;
         }
 
-        /* 折叠面板 */
+        /* 折叠面板 - Apple 毛玻璃风格 */
         .accordion {
             margin: 20px 0;
         }
 
         .accordion-item {
-            background: var(--card-bg);
-            border: 1px solid rgba(201, 169, 97, 0.2);
-            border-radius: 15px;
+            backdrop-filter: blur(15px) saturate(150%);
+            -webkit-backdrop-filter: blur(15px) saturate(150%);
+            border-radius: 18px;
             margin-bottom: 15px;
             overflow: hidden;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        /* 南洋主題手風琴 - 白色系 */
+        :root[data-theme="tropical"] .accordion-item,
+        :root:not([data-theme]) .accordion-item {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(0, 137, 123, 0.2);
+            box-shadow: 0 4px 20px var(--tropical-shadow);
         }
 
         .accordion-header {
-            background: linear-gradient(135deg, rgba(212, 117, 110, 0.3) 0%, rgba(101, 67, 33, 0.3) 100%);
-            border: 1px solid rgba(201, 169, 97, 0.3);
-            color: var(--gold);
+            background: linear-gradient(135deg, rgba(0, 137, 123, 0.1) 0%, rgba(46, 125, 50, 0.1) 100%);
+            border-bottom: 1px solid rgba(0, 137, 123, 0.15);
+            color: var(--tropical-green);
             padding: 20px 25px;
             cursor: pointer;
             display: flex;
@@ -370,8 +724,8 @@
         }
 
         .accordion-header:hover {
-            background: linear-gradient(135deg, rgba(255, 213, 79, 0.25) 0%, rgba(212, 117, 110, 0.25) 100%);
-            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.2) 0%, rgba(0, 137, 123, 0.2) 100%);
+            border-bottom-color: var(--golden-sun);
         }
 
         .accordion-title {
@@ -422,7 +776,7 @@
             top: 0;
             bottom: -35px;
             width: 3px;
-            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, var(--tropical-teal) 0%, var(--ocean-blue) 100%);
         }
 
         .timeline-item:last-child::before {
@@ -435,7 +789,7 @@
             top: 5px;
             width: 35px;
             height: 35px;
-            background: linear-gradient(135deg, var(--primary-red) 0%, var(--brown) 100%);
+            background: linear-gradient(135deg, var(--tropical-green) 0%, var(--tropical-teal) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -443,19 +797,23 @@
             color: white;
             font-weight: 700;
             font-size: 1.1em;
-            box-shadow: 0 3px 10px rgba(139, 38, 53, 0.4);
+            box-shadow: 0 4px 12px var(--tropical-shadow);
         }
 
         .timeline-content {
-            background: rgba(139, 38, 53, 0.05);
+            background: rgba(0, 137, 123, 0.05);
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 137, 123, 0.1);
         }
 
         .timeline-title {
             font-size: 1.3em;
             font-weight: 700;
-            color: var(--primary-red);
+            background: linear-gradient(135deg, var(--tropical-green) 0%, var(--tropical-teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 12px;
         }
 
@@ -520,28 +878,40 @@
         }
 
         .badge-phase1 {
-            background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+            background: linear-gradient(135deg, #81C784 0%, #2E7D32 100%);
             color: white;
         }
 
         .badge-phase2 {
-            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            background: linear-gradient(135deg, #2196F3 0%, #0288D1 100%);
             color: white;
         }
 
         /* 测试案例 */
         .test-case {
-            background: var(--card-bg);
             border-radius: 15px;
             padding: 25px;
             margin: 15px 0;
             border: 2px solid rgba(201, 169, 97, 0.3);
             cursor: pointer;
             transition: all 0.3s;
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        /* 南洋主題測試案例 - 白色系 */
+        :root[data-theme="tropical"] .test-case,
+        :root:not([data-theme]) .test-case {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        /* 科幻主題測試案例 - 深色系 */
+        :root[data-theme="cyber"] .test-case {
+            background: rgba(26, 26, 46, 0.85);
+            border-color: rgba(167, 139, 250, 0.3);
         }
 
         .test-case:hover {
-            border-color: var(--gold);
+            border-color: var(--golden-sun);
             box-shadow: 0 8px 25px rgba(255, 213, 79, 0.3);
         }
 
@@ -583,11 +953,24 @@
 
         /* 模拟器 */
         .simulator {
-            background: var(--card-bg);
             border: 1px solid rgba(201, 169, 97, 0.2);
             border-radius: 20px;
             padding: 35px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        /* 南洋主題模擬器 - 白色系 */
+        :root[data-theme="tropical"] .simulator,
+        :root:not([data-theme]) .simulator {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 137, 123, 0.3);
+        }
+
+        /* 科幻主題模擬器 - 深色系 */
+        :root[data-theme="cyber"] .simulator {
+            background: rgba(26, 26, 46, 0.9);
+            border-color: rgba(167, 139, 250, 0.4);
         }
 
         .sim-form {
@@ -664,7 +1047,6 @@
         }
 
         .res-item {
-            background: var(--card-bg);
             padding: 18px;
             margin: 12px 0;
             border-radius: 12px;
@@ -673,6 +1055,19 @@
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             border-left: 5px solid #667eea;
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        /* 南洋主題預約項目 - 白色系 */
+        :root[data-theme="tropical"] .res-item,
+        :root:not([data-theme]) .res-item {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 科幻主題預約項目 - 深色系 */
+        :root[data-theme="cyber"] .res-item {
+            background: rgba(26, 26, 46, 0.85);
+            border-left-color: var(--cyber-purple);
         }
 
         .res-item.cancelled {
@@ -705,6 +1100,286 @@
             transform: scale(1.05);
         }
 
+        /* ========================
+           🚀 深色科幻主題特殊樣式
+           ======================== */
+
+        /* 卡片深色版本 - 提高透明度和對比度 */
+        :root[data-theme="cyber"] .card {
+            background: rgba(26, 26, 46, 0.85);
+            border-color: rgba(167, 139, 250, 0.4);
+            box-shadow: 0 8px 32px rgba(167, 139, 250, 0.25);
+        }
+
+        /* 卡片內文字強制使用淺色 */
+        :root[data-theme="cyber"] .card,
+        :root[data-theme="cyber"] .card * {
+            color: var(--text-light) !important;
+        }
+
+        /* 卡片標題使用純白 */
+        :root[data-theme="cyber"] .card-title {
+            color: var(--text-bright) !important;
+        }
+
+        :root[data-theme="cyber"] .card::before {
+            background: linear-gradient(90deg, var(--cyber-purple) 0%, var(--cyber-cyan) 50%, var(--cyber-pink) 100%);
+            box-shadow: 0 0 20px var(--cyber-cyan);
+        }
+
+        /* 場景卡片 */
+        .scenario-card {
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+
+        /* 南洋主題場景卡片 - 白色系 */
+        :root[data-theme="tropical"] .scenario-card,
+        :root:not([data-theme]) .scenario-card {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* 科幻主題場景卡片 - 深色系 */
+        :root[data-theme="cyber"] .scenario-card {
+            background: rgba(26, 26, 46, 0.85);
+            border-color: rgba(167, 139, 250, 0.4);
+        }
+
+        /* 大數據卡片深色版本 */
+        :root[data-theme="cyber"] .big-stat {
+            background: rgba(26, 26, 46, 0.9);
+            border-color: var(--cyber-cyan);
+        }
+
+        :root[data-theme="cyber"] .big-stat::before {
+            background: radial-gradient(circle, var(--glow-cyan) 0%, transparent 70%);
+        }
+
+        :root[data-theme="cyber"] .big-stat:hover {
+            border-color: var(--cyber-pink);
+            box-shadow: 0 15px 40px var(--cyber-shadow);
+        }
+
+        /* 大數據卡片文字顏色 */
+        :root[data-theme="cyber"] .big-stat-label {
+            color: var(--text-gray) !important;
+        }
+
+        :root[data-theme="cyber"] .big-stat-value {
+            background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 導航深色版本 */
+        :root[data-theme="cyber"] .nav {
+            background: rgba(26, 26, 46, 0.85);
+            border-bottom-color: rgba(139, 92, 246, 0.3);
+        }
+
+        :root[data-theme="cyber"] .nav-tab:hover {
+            background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.15) 100%);
+            color: var(--cyber-cyan);
+        }
+
+        :root[data-theme="cyber"] .nav-tab.active {
+            color: var(--cyber-cyan);
+            border-bottom-color: var(--cyber-pink);
+            background: linear-gradient(180deg, transparent 0%, rgba(236, 72, 153, 0.2) 100%);
+        }
+
+        /* 圖標卡片深色版本 */
+        :root[data-theme="cyber"] .icon-card {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 22, 42, 0.9) 100%);
+            border-color: var(--cyber-purple);
+        }
+
+        :root[data-theme="cyber"] .icon-card::before {
+            background: radial-gradient(circle, var(--glow-purple) 0%, transparent 70%);
+        }
+
+        :root[data-theme="cyber"] .icon-card:hover {
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 15px 40px var(--glow-cyan);
+        }
+
+        /* 圖標卡片文字顏色 */
+        :root[data-theme="cyber"] .icon-card-title {
+            color: var(--text-bright) !important;
+        }
+
+        :root[data-theme="cyber"] .icon-card-text {
+            color: var(--text-gray) !important;
+        }
+
+        /* 圖表容器深色版本 */
+        :root[data-theme="cyber"] .diagram-box {
+            background: rgba(26, 26, 46, 0.7);
+            border-color: var(--cyber-cyan);
+        }
+
+        :root[data-theme="cyber"] .diagram-box::before {
+            background: linear-gradient(90deg, var(--cyber-pink) 0%, var(--cyber-purple) 50%, var(--cyber-cyan) 100%);
+            box-shadow: 0 0 15px var(--cyber-cyan);
+        }
+
+        /* 規則卡片深色版本 */
+        :root[data-theme="cyber"] .rule-card {
+            background: rgba(26, 26, 46, 0.85);
+            border-color: rgba(167, 139, 250, 0.4);
+            border-left-color: var(--cyber-cyan);
+        }
+
+        :root[data-theme="cyber"] .rule-card:hover {
+            background: rgba(26, 26, 46, 0.95);
+            border-left-color: var(--cyber-pink);
+        }
+
+        /* 規則卡片文字顏色 */
+        :root[data-theme="cyber"] .rule-title {
+            background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        :root[data-theme="cyber"] .rule-desc {
+            color: var(--text-gray) !important;
+        }
+
+        :root[data-theme="cyber"] .rule-details {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: rgba(167, 139, 250, 0.25);
+        }
+
+        :root[data-theme="cyber"] .rule-details li {
+            color: var(--text-light) !important;
+            border-bottom-color: rgba(167, 139, 250, 0.1);
+        }
+
+        /* 時間軸深色版本 */
+        :root[data-theme="cyber"] .timeline-item::before {
+            background: linear-gradient(180deg, var(--cyber-cyan) 0%, var(--cyber-purple) 100%);
+        }
+
+        :root[data-theme="cyber"] .timeline-dot {
+            background: linear-gradient(135deg, var(--cyber-purple) 0%, var(--cyber-cyan) 100%);
+            box-shadow: 0 4px 12px var(--cyber-shadow), 0 0 20px var(--glow-cyan);
+        }
+
+        :root[data-theme="cyber"] .timeline-content {
+            background: rgba(167, 139, 250, 0.15);
+            border-color: rgba(167, 139, 250, 0.25);
+        }
+
+        /* 時間軸文字顏色 */
+        :root[data-theme="cyber"] .timeline-title {
+            background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        :root[data-theme="cyber"] .timeline-desc {
+            color: var(--text-gray) !important;
+        }
+
+        /* 手風琴深色版本 */
+        :root[data-theme="cyber"] .accordion-item {
+            background: rgba(26, 26, 46, 0.6);
+            border-color: rgba(139, 92, 246, 0.25);
+        }
+
+        :root[data-theme="cyber"] .accordion-header {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(6, 182, 212, 0.15) 100%);
+            border-bottom-color: rgba(139, 92, 246, 0.2);
+            color: var(--cyber-cyan);
+        }
+
+        :root[data-theme="cyber"] .accordion-header:hover {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+            border-bottom-color: var(--cyber-pink);
+        }
+
+        /* 霓虹光效果 */
+        :root[data-theme="cyber"] .hero h1,
+        :root[data-theme="cyber"] .diagram-title {
+            text-shadow: 0 0 20px var(--glow-cyan), 0 0 40px var(--glow-cyan);
+        }
+
+        /* ========================
+           通用文字對比度強化
+           ======================== */
+
+        /* 所有段落和描述文字 */
+        :root[data-theme="cyber"] p,
+        :root[data-theme="cyber"] .text,
+        :root[data-theme="cyber"] li {
+            color: var(--text-light) !important;
+        }
+
+        /* 所有標題 */
+        :root[data-theme="cyber"] h1,
+        :root[data-theme="cyber"] h2,
+        :root[data-theme="cyber"] h3,
+        :root[data-theme="cyber"] h4,
+        :root[data-theme="cyber"] h5,
+        :root[data-theme="cyber"] h6 {
+            color: var(--text-bright) !important;
+        }
+
+        /* 手風琴內容文字 */
+        :root[data-theme="cyber"] .accordion-body,
+        :root[data-theme="cyber"] .accordion-body * {
+            color: var(--text-light) !important;
+        }
+
+        :root[data-theme="cyber"] .accordion-title {
+            color: var(--cyber-cyan) !important;
+        }
+
+        /* 流程圖容器文字 */
+        :root[data-theme="cyber"] .diagram-box * {
+            color: var(--text-light) !important;
+        }
+
+        /* 強調文字和標籤 */
+        :root[data-theme="cyber"] strong,
+        :root[data-theme="cyber"] .label,
+        :root[data-theme="cyber"] .badge {
+            color: var(--cyber-cyan) !important;
+        }
+
+        /* 表單輸入和選擇框 */
+        :root[data-theme="cyber"] input,
+        :root[data-theme="cyber"] select,
+        :root[data-theme="cyber"] textarea {
+            background: rgba(26, 26, 46, 0.8) !important;
+            color: var(--text-light) !important;
+            border-color: var(--cyber-purple) !important;
+        }
+
+        :root[data-theme="cyber"] input::placeholder,
+        :root[data-theme="cyber"] select::placeholder,
+        :root[data-theme="cyber"] textarea::placeholder {
+            color: var(--text-gray) !important;
+        }
+
+        /* 按鈕文字 */
+        :root[data-theme="cyber"] button {
+            color: var(--text-bright) !important;
+        }
+
+        /* 警告和提示文字 */
+        :root[data-theme="cyber"] .alert,
+        :root[data-theme="cyber"] .alert * {
+            color: var(--text-light) !important;
+        }
+
         /* 响应式 */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2em; }
@@ -714,6 +1389,16 @@
     </style>
 </head>
 <body>
+    <!-- 主題切換按鈕 -->
+    <div class="theme-toggle">
+        <button class="theme-btn active" data-theme="tropical" title="南洋熱帶風格">
+            <span>🌴</span>
+        </button>
+        <button class="theme-btn" data-theme="cyber" title="深色科幻風格">
+            <span>🚀</span>
+        </button>
+    </div>
+
     <!-- 顶部 -->
     <div class="hero">
         <h1>🏥 京都堂預約派號系統</h1>
@@ -751,8 +1436,9 @@
             <button class="nav-tab" onclick="showSection(1)">👤 我是客人</button>
             <button class="nav-tab" onclick="showSection(2)">👨‍💼 我是員工</button>
             <button class="nav-tab" onclick="showSection(3)">🎯 核心規則</button>
-            <button class="nav-tab" onclick="showSection(4)">🎮 親手試試</button>
-            <button class="nav-tab" onclick="showSection(5)">📊 技術細節</button>
+            <button class="nav-tab" onclick="showSection(4)">📊 判斷與流程</button>
+            <button class="nav-tab" onclick="showSection(5)">🎮 親手試試</button>
+            <button class="nav-tab" onclick="showSection(6)">📊 技術細節</button>
         </div>
     </div>
 
@@ -761,10 +1447,10 @@
         <div class="section active">
             <!-- 一句話說明 -->
             <div class="card" style="background: linear-gradient(135deg, rgba(255, 213, 79, 0.15) 0%, rgba(212, 117, 110, 0.1) 100%); border: 2px solid var(--gold); text-align: center; padding: 50px 35px;">
-                <h2 style="font-size: 2.5em; color: var(--gold); margin-bottom: 25px;">🎯 這是什麼？</h2>
+                <h2 style="font-size: 2.5em; color: var(--golden-sun); margin-bottom: 25px;">🎯 這是什麼？</h2>
                 <p style="font-size: 1.8em; line-height: 1.8; color: var(--text-light); font-weight: 600;">
-                    就像去銀行、餐廳拿號碼牌等叫號<br>
-                    <span style="color: var(--gold);">但更聰明！</span><br>
+                    就像去銀行、餐廳拿號碼牌等叫號<br/>
+                    <span style="color: var(--golden-sun);">但更聰明！</span><br/>
                     手機就能看排到哪、快輪到會通知你
                 </p>
             </div>
@@ -804,14 +1490,25 @@
             <!-- 超簡單流程圖 -->
             <div class="diagram-box">
                 <div class="diagram-title">📱 超簡單！只要 3 步驟</div>
-                <pre class="mermaid">
-graph LR
-    A["<span style='font-size: 20px;'>1️⃣</span><br/><b>預約掛號</b><br/>櫃檯幫你<br/>取得號碼"] --> B["<span style='font-size: 20px;'>2️⃣</span><br/><b>用手機看</b><br/>LINE查看<br/>排到哪裡"] --> C["<span style='font-size: 20px;'>3️⃣</span><br/><b>準時到</b><br/>收到通知<br/>就來看診"]
-
-    style A fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#fff,font-size:18px
-    style B fill:#66BB6A,stroke:#388E3C,stroke-width:4px,color:#fff,font-size:18px
-    style C fill:#FFA726,stroke:#F57C00,stroke-width:4px,color:#fff,font-size:18px
-</pre>
+                <div style="display: flex; align-items: center; justify-content: center; gap: 30px; padding: 40px; flex-wrap: wrap;">
+                    <div style="background: #42A5F5; color: #fff; padding: 25px 35px; border-radius: 12px; border: 4px solid #0288D1; text-align: center; flex: 1; min-width: 200px;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">1️⃣</div>
+                        <div style="font-size: 1.3em; font-weight: 700; margin-bottom: 8px;">預約掛號</div>
+                        <div style="font-size: 1.1em;">櫃檯幫你<br>取得號碼</div>
+                    </div>
+                    <div style="color: var(--golden-sun); font-size: 32px; font-weight: 700;">→</div>
+                    <div style="background: #66BB6A; color: #fff; padding: 25px 35px; border-radius: 12px; border: 4px solid #2E7D32; text-align: center; flex: 1; min-width: 200px;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">2️⃣</div>
+                        <div style="font-size: 1.3em; font-weight: 700; margin-bottom: 8px;">用手機看</div>
+                        <div style="font-size: 1.1em;">LINE查看<br>排到哪裡</div>
+                    </div>
+                    <div style="color: var(--golden-sun); font-size: 32px; font-weight: 700;">→</div>
+                    <div style="background: #FFA726; color: #fff; padding: 25px 35px; border-radius: 12px; border: 4px solid #F57C00; text-align: center; flex: 1; min-width: 200px;">
+                        <div style="font-size: 32px; margin-bottom: 10px;">3️⃣</div>
+                        <div style="font-size: 1.3em; font-weight: 700; margin-bottom: 8px;">準時到</div>
+                        <div style="font-size: 1.1em;">收到通知<br>就來看診</div>
+                    </div>
+                </div>
             </div>
 
             <!-- 給不同角色看的說明 -->
@@ -824,29 +1521,29 @@ graph LR
                 <div class="icon-grid">
                     <div class="icon-card" style="cursor: pointer;" onclick="showSection(1)">
                         <span class="icon-card-icon">👤</span>
-                        <div class="icon-card-title" style="color: var(--gold);">我是來看診的客人</div>
+                        <div class="icon-card-title" style="color: var(--golden-sun);">我是來看診的客人</div>
                         <div class="icon-card-text" style="font-size: 1.1em; margin-top: 15px;">
-                            想知道怎麼用手機<br>查看排隊、收通知
+                            想知道怎麼用手機<br/>查看排隊、收通知
                         </div>
-                        <div style="margin-top: 20px; color: var(--gold); font-weight: 700;">點我看教學 →</div>
+                        <div style="margin-top: 20px; color: var(--golden-sun); font-weight: 700;">點我看教學 →</div>
                     </div>
 
                     <div class="icon-card" style="cursor: pointer;" onclick="showSection(2)">
                         <span class="icon-card-icon">👨‍💼</span>
-                        <div class="icon-card-title" style="color: var(--gold);">我是櫃檯/醫療人員</div>
+                        <div class="icon-card-title" style="color: var(--golden-sun);">我是櫃檯/醫療人員</div>
                         <div class="icon-card-text" style="font-size: 1.1em; margin-top: 15px;">
-                            想知道怎麼幫客人<br>預約、叫號、管理
+                            想知道怎麼幫客人<br/>預約、叫號、管理
                         </div>
-                        <div style="margin-top: 20px; color: var(--gold); font-weight: 700;">點我看操作 →</div>
+                        <div style="margin-top: 20px; color: var(--golden-sun); font-weight: 700;">點我看操作 →</div>
                     </div>
 
                     <div class="icon-card" style="cursor: pointer;" onclick="showSection(3)">
                         <span class="icon-card-icon">🎯</span>
-                        <div class="icon-card-title" style="color: var(--gold);">我想了解派號規則</div>
+                        <div class="icon-card-title" style="color: var(--golden-sun);">我想了解派號規則</div>
                         <div class="icon-card-text" style="font-size: 1.1em; margin-top: 15px;">
-                            想知道號碼怎麼排<br>什麼情況會改變
+                            想知道號碼怎麼排<br/>什麼情況會改變
                         </div>
-                        <div style="margin-top: 20px; color: var(--gold); font-weight: 700;">點我看規則 →</div>
+                        <div style="margin-top: 20px; color: var(--golden-sun); font-weight: 700;">點我看規則 →</div>
                     </div>
                 </div>
             </div>
@@ -865,7 +1562,7 @@ graph LR
                     <div>
                         <h4 style="font-weight: 700; margin-bottom: 10px;">給客人的話</h4>
                         <p style="line-height: 1.8; font-size: 1.1em;">
-                            您不需要做任何複雜的事！櫃檯會幫您處理好一切。<br>
+                            您不需要做任何複雜的事！櫃檯會幫您處理好一切。<br/>
                             您只要記得：<strong>用 LINE 就能看排隊、收通知</strong>
                         </p>
                     </div>
@@ -874,39 +1571,39 @@ graph LR
                 <!-- 客人的完整旅程 -->
                 <div class="diagram-box">
                     <div class="diagram-title">🚶 我的看診旅程（從頭到尾）</div>
-                    <pre class="mermaid">
+                    <pre class="mermaid" style="display: none;">
 graph LR
-    S([🏠 在家]) --> A[🏥 到診所<br/>預約掛號]
-    A --> B[📱 拿到號碼<br/>可用LINE查]
-    B --> C[☕ 到處走走<br/>不用傻等]
-    C --> D[🔔 收到通知<br/>快到你了]
-    D --> E[👨‍⚕️ 進診間<br/>看診]
+    S([🏠 在家]) --> A[🏥 到診所 預約掛號]
+    A --> B[📱 拿到號碼 可用LINE查]
+    B --> C[☕ 到處走走 不用傻等]
+    C --> D[🔔 收到通知 快到你了]
+    D --> E[👨‍⚕️ 進診間 看診]
     E --> F([✅ 完成])
 
     style S fill:#9E9E9E,stroke:#616161,stroke-width:3px,color:#fff
-    style A fill:#42A5F5,stroke:#1976D2,stroke-width:4px,color:#fff
-    style B fill:#66BB6A,stroke:#388E3C,stroke-width:4px,color:#fff
+    style A fill:#42A5F5,stroke:#0288D1,stroke-width:4px,color:#fff
+    style B fill:#66BB6A,stroke:#2E7D32,stroke-width:4px,color:#fff
     style C fill:#FFB74D,stroke:#FB8C00,stroke-width:4px,color:#fff
     style D fill:#FF5722,stroke:#E64A19,stroke-width:4px,color:#fff
-    style E fill:#AB47BC,stroke:#7B1FA2,stroke-width:4px,color:#fff
-    style F fill:#4CAF50,stroke:#388E3C,stroke-width:3px,color:#fff
+    style E fill:#AB47BC,stroke:#6D4C41,stroke-width:4px,color:#fff
+    style F fill:#81C784,stroke:#2E7D32,stroke-width:3px,color:#fff
 </pre>
                 </div>
 
                 <!-- 詳細步驟說明 -->
                 <div style="margin: 40px 0;">
-                    <h3 style="font-size: 2em; color: var(--gold); text-align: center; margin-bottom: 40px;">📖 每一步詳細說明</h3>
+                    <h3 style="font-size: 2em; color: var(--golden-sun); text-align: center; margin-bottom: 40px;">📖 每一步詳細說明</h3>
 
                     <!-- 步驟 1 -->
                     <div class="icon-card" style="margin: 25px 0; padding: 40px;">
                         <div style="display: flex; align-items: center; gap: 30px;">
                             <div style="font-size: 5em; flex-shrink: 0;">1️⃣</div>
                             <div>
-                                <h4 style="font-size: 1.8em; color: var(--gold); margin-bottom: 15px;">到診所櫃檯預約</h4>
+                                <h4 style="font-size: 1.8em; color: var(--golden-sun); margin-bottom: 15px;">到診所櫃檯預約</h4>
                                 <p style="font-size: 1.3em; line-height: 1.8; color: var(--text-light);">
-                                    跟以前一樣，到櫃檯說「我要掛號」<br>
-                                    櫃檯人員會幫你在電腦裡預約，然後給你一個號碼<br>
-                                    例如：<strong style="color: var(--gold);">診一/午診/3</strong>（第3號）
+                                    跟以前一樣，到櫃檯說「我要掛號」<br/>
+                                    櫃檯人員會幫你在電腦裡預約，然後給你一個號碼<br/>
+                                    例如：<strong style="color: var(--golden-sun);">診一/午診/3</strong>（第3號）
                                 </p>
                             </div>
                         </div>
@@ -917,12 +1614,12 @@ graph LR
                         <div style="display: flex; align-items: center; gap: 30px;">
                             <div style="font-size: 5em; flex-shrink: 0;">2️⃣</div>
                             <div>
-                                <h4 style="font-size: 1.8em; color: var(--gold); margin-bottom: 15px;">用手機 LINE 查看</h4>
+                                <h4 style="font-size: 1.8em; color: var(--golden-sun); margin-bottom: 15px;">用手機 LINE 查看</h4>
                                 <p style="font-size: 1.3em; line-height: 1.8; color: var(--text-light);">
-                                    掃描診所的 QR Code，或點擊櫃檯給你的連結<br>
-                                    就能在 LINE 裡看到：<br>
-                                    ✅ 你的號碼是幾號<br>
-                                    ✅ 現在叫到幾號<br>
+                                    掃描診所的 QR Code，或點擊櫃檯給你的連結<br/>
+                                    就能在 LINE 裡看到：<br/>
+                                    ✅ 你的號碼是幾號<br/>
+                                    ✅ 現在叫到幾號<br/>
                                     ✅ 大概還要等多久
                                 </p>
                             </div>
@@ -934,12 +1631,12 @@ graph LR
                         <div style="display: flex; align-items: center; gap: 30px;">
                             <div style="font-size: 5em; flex-shrink: 0;">3️⃣</div>
                             <div>
-                                <h4 style="font-size: 1.8em; color: var(--gold); margin-bottom: 15px;">自由活動不用傻等</h4>
+                                <h4 style="font-size: 1.8em; color: var(--golden-sun); margin-bottom: 15px;">自由活動不用傻等</h4>
                                 <p style="font-size: 1.3em; line-height: 1.8; color: var(--text-light);">
-                                    因為手機可以看，所以你可以：<br>
-                                    ☕ 去買杯咖啡<br>
-                                    🍜 去吃個飯<br>
-                                    🚶 到附近走走<br>
+                                    因為手機可以看，所以你可以：<br/>
+                                    ☕ 去買杯咖啡<br/>
+                                    🍜 去吃個飯<br/>
+                                    🚶 到附近走走<br/>
                                     不用一直坐在候診區
                                 </p>
                             </div>
@@ -951,10 +1648,10 @@ graph LR
                         <div style="display: flex; align-items: center; gap: 30px;">
                             <div style="font-size: 5em; flex-shrink: 0;">4️⃣</div>
                             <div>
-                                <h4 style="font-size: 1.8em; color: var(--gold); margin-bottom: 15px;">收到通知準備回來</h4>
+                                <h4 style="font-size: 1.8em; color: var(--golden-sun); margin-bottom: 15px;">收到通知準備回來</h4>
                                 <p style="font-size: 1.3em; line-height: 1.8; color: var(--text-light);">
-                                    快輪到你的時候，LINE 會自動通知你：<br>
-                                    🔔 「快到您了！請準備回診所」<br>
+                                    快輪到你的時候，LINE 會自動通知你：<br/>
+                                    🔔 「快到您了！請準備回診所」<br/>
                                     完全不用擔心錯過
                                 </p>
                             </div>
@@ -966,11 +1663,11 @@ graph LR
                         <div style="display: flex; align-items: center; gap: 30px;">
                             <div style="font-size: 5em; flex-shrink: 0;">5️⃣</div>
                             <div>
-                                <h4 style="font-size: 1.8em; color: var(--gold); margin-bottom: 15px;">進診間看診</h4>
+                                <h4 style="font-size: 1.8em; color: var(--golden-sun); margin-bottom: 15px;">進診間看診</h4>
                                 <p style="font-size: 1.3em; line-height: 1.8; color: var(--text-light);">
-                                    輪到你的號碼時：<br>
-                                    📟 現場螢幕會顯示你的號碼<br>
-                                    📱 LINE 也會再次提醒<br>
+                                    輪到你的號碼時：<br/>
+                                    📟 現場螢幕會顯示你的號碼<br/>
+                                    📱 LINE 也會再次提醒<br/>
                                     👨‍⚕️ 就可以進診間看診了！
                                 </p>
                             </div>
@@ -986,16 +1683,16 @@ graph LR
                     </div>
 
                     <div style="font-size: 1.2em; line-height: 2.5; color: var(--text-light);">
-                        <p style="margin: 20px 0;"><strong style="color: var(--gold);">Q: 我一定要用 LINE 嗎？</strong><br>
+                        <p style="margin: 20px 0;"><strong style="color: var(--golden-sun);">Q: 我一定要用 LINE 嗎？</strong><br/>
                         A: 不一定！您也可以用傳統方式在現場等。但用 LINE 會更方便喔！</p>
 
-                        <p style="margin: 20px 0;"><strong style="color: var(--gold);">Q: 我不會用手機怎麼辦？</strong><br>
+                        <p style="margin: 20px 0;"><strong style="color: var(--golden-sun);">Q: 我不會用手機怎麼辦？</strong><br/>
                         A: 沒關係！櫃檯人員會幫您，或是家人可以幫您用他們的手機看。</p>
 
-                        <p style="margin: 20px 0;"><strong style="color: var(--gold);">Q: 我走遠了，趕不回來怎麼辦？</strong><br>
+                        <p style="margin: 20px 0;"><strong style="color: var(--golden-sun);">Q: 我走遠了，趕不回來怎麼辦？</strong><br/>
                         A: 通知會提前發送，給您充足的時間回來。如果真的趕不及，可以請櫃檯先讓您晚一點看。</p>
 
-                        <p style="margin: 20px 0;"><strong style="color: var(--gold);">Q: 號碼會不會突然改變？</strong><br>
+                        <p style="margin: 20px 0;"><strong style="color: var(--golden-sun);">Q: 號碼會不會突然改變？</strong><br/>
                         A: 不會！您的號碼一旦拿到就固定了，不用擔心。</p>
                     </div>
                 </div>
@@ -1003,7 +1700,7 @@ graph LR
 
             <div class="diagram-box" style="display: none;">
                 <div class="diagram-title">🔧 系統核心功能架構</div>
-                <pre class="mermaid">
+                <pre class="mermaid" style="display: none;">
 graph TB
     subgraph 客人端
         A[👤 客人] -->|掃描 QR Code| B[📱 LINE 報到取號]
@@ -1026,15 +1723,15 @@ graph TB
     D -->|就診| I
 
     style A fill:#C2185B,stroke:#880E4F,stroke-width:3px,color:#fff
-    style B fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style C fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style D fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
+    style B fill:#0288D1,stroke:#0D47A1,stroke-width:3px,color:#fff
+    style C fill:#0288D1,stroke:#0D47A1,stroke-width:3px,color:#fff
+    style D fill:#0288D1,stroke:#0D47A1,stroke-width:3px,color:#fff
     style E fill:#FB8C00,stroke:#F57C00,stroke-width:3px,color:#fff
-    style F fill:#7B1FA2,stroke:#4A148C,stroke-width:3px,color:#fff
+    style F fill:#6D4C41,stroke:#4A148C,stroke-width:3px,color:#fff
     style G fill:#FB8C00,stroke:#F57C00,stroke-width:3px,color:#fff
-    style H fill:#388E3C,stroke:#1B5E20,stroke-width:3px,color:#fff
+    style H fill:#2E7D32,stroke:#1B5E20,stroke-width:3px,color:#fff
     style I fill:#FB8C00,stroke:#F57C00,stroke-width:3px,color:#fff
-    style J fill:#388E3C,stroke:#1B5E20,stroke-width:3px,color:#fff
+    style J fill:#2E7D32,stroke:#1B5E20,stroke-width:3px,color:#fff
 </pre>
             </div>
 
@@ -1090,7 +1787,7 @@ graph TB
                 <div style="width: 100%;">
                     <h3 style="font-size: 1.4em; font-weight: 700; margin-bottom: 15px; text-align: center;">一句話總結</h3>
                     <p style="font-size: 1.2em; line-height: 2; text-align: center;">
-                        本案以「<strong style="color: #667eea;">LINE 推播 + 雲端叫號 + 後台整合</strong>」改善現場報到/掛號引起的排隊客訴，<br>
+                        本案以「<strong style="color: #667eea;">LINE 推播 + 雲端叫號 + 後台整合</strong>」改善現場報到/掛號引起的排隊客訴，<br/>
                         中壢京都堂作為首站導入，<strong>已於 2025/09/10 正式開通</strong>。
                     </p>
                 </div>
@@ -1110,7 +1807,7 @@ graph TB
                     <div>
                         <h4 style="font-weight: 700; margin-bottom: 10px;">流程總覽</h4>
                         <p style="line-height: 1.8;">
-                            完整流程涵蓋<strong>前置準備、預約派號、客人報到、現場叫號、完成就診</strong>五大階段，<br>
+                            完整流程涵蓋<strong>前置準備、預約派號、客人報到、現場叫號、完成就診</strong>五大階段，<br/>
                             並規劃<strong>兩階段實施計畫</strong>，逐步整合 NPOS 簡訊與叫叫我 LINE 自動報到功能。
                         </p>
                     </div>
@@ -1118,11 +1815,11 @@ graph TB
 
                 <div class="diagram-box">
                     <div class="diagram-title">🎯 全流程示意圖（左至右）</div>
-                    <pre class="mermaid">
+                    <pre class="mermaid" style="display: none;">
 graph LR
-    START([🏥 開始]) --> PREP[🏗️ 前置準備<br/>排班建立]
-    PREP --> RESERVE[📱 預約派號<br/>現場協助]
-    RESERVE --> ASSIGN[🔢 系統派號<br/>奇數序號]
+    START([🏥 開始]) --> PREP[🏗️ 前置準備 排班建立]
+    PREP --> RESERVE[📱 預約派號 現場協助]
+    RESERVE --> ASSIGN[🔢 系統派號 奇數序號]
     ASSIGN --> NOTIFY{通知方式}
 
     NOTIFY -->|第一階段| SMS[📲 NPOS 簡訊]
@@ -1142,28 +1839,28 @@ graph LR
     ENTER --> TREAT[👨‍⚕️ 接受診療]
     TREAT --> COMPLETE([✅ 完成就診])
 
-    style START fill:#7B1FA2,stroke:#4A148C,stroke-width:3px,color:#fff
-    style PREP fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
+    style START fill:#6D4C41,stroke:#4A148C,stroke-width:3px,color:#fff
+    style PREP fill:#0288D1,stroke:#0D47A1,stroke-width:3px,color:#fff
     style RESERVE fill:#FB8C00,stroke:#F57C00,stroke-width:3px,color:#fff
-    style ASSIGN fill:#7B1FA2,stroke:#4A148C,stroke-width:3px,color:#fff
+    style ASSIGN fill:#6D4C41,stroke:#4A148C,stroke-width:3px,color:#fff
     style NOTIFY fill:#607D8B,stroke:#37474F,stroke-width:3px,color:#fff
     style SMS fill:#FB8C00,stroke:#F57C00,stroke-width:2px,color:#fff
-    style LINE1 fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
+    style LINE1 fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
     style ARRIVE fill:#9E9E9E,stroke:#616161,stroke-width:2px,color:#fff
-    style SCAN fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
-    style CHECKIN fill:#66BB6A,stroke:#4CAF50,stroke-width:2px,color:#fff
+    style SCAN fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style CHECKIN fill:#66BB6A,stroke:#81C784,stroke-width:2px,color:#fff
     style WAIT fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
     style CALL fill:#E91E63,stroke:#C2185B,stroke-width:3px,color:#fff
     style PUSH fill:#FF5722,stroke:#E64A19,stroke-width:2px,color:#fff
-    style ENTER fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff
-    style TREAT fill:#9C27B0,stroke:#7B1FA2,stroke-width:3px,color:#fff
-    style COMPLETE fill:#388E3C,stroke:#1B5E20,stroke-width:3px,color:#fff
+    style ENTER fill:#9C27B0,stroke:#6D4C41,stroke-width:2px,color:#fff
+    style TREAT fill:#9C27B0,stroke:#6D4C41,stroke-width:3px,color:#fff
+    style COMPLETE fill:#2E7D32,stroke:#1B5E20,stroke-width:3px,color:#fff
 </pre>
                 </div>
 
-                <div class="diagram-box">
+                <div class="diagram-box" style="display: none;">
                     <div class="diagram-title">🗺️ 完整流程架構圖（詳細版）</div>
-                    <pre class="mermaid">
+                    <pre class="mermaid" style="display: none;">
 graph TD
     subgraph 階段1[🏗️ 階段一：前置準備作業]
         A1[店長提供醫師排班資訊] --> A2[醫務秘書設定拷貝班表]
@@ -1171,7 +1868,7 @@ graph TD
     end
 
     subgraph 階段2[📱 階段二：預約與派號作業]
-        B1[現場人員協助預約<br/>日期/門市/診間/時段/時間] --> B2[系統自動派號<br/>奇數序號 1,3,5,7...]
+        B1[現場人員協助預約 日期/門市/診間/時段/時間] --> B2[系統自動派號 奇數序號 1,3,5,7...]
         B2 --> B3A[第一階段：NPOS 簡訊通知]
         B2 --> B3B[第二階段：LINE 自動報到]
     end
@@ -1198,34 +1895,34 @@ graph TD
     階段3 --> 階段4
     階段4 --> 階段5
 
-    style 階段1 fill:#1976D2,stroke:#0D47A1,stroke-width:4px,color:#fff
+    style 階段1 fill:#0288D1,stroke:#0D47A1,stroke-width:4px,color:#fff
     style 階段2 fill:#F57C00,stroke:#E65100,stroke-width:4px,color:#fff
-    style 階段3 fill:#388E3C,stroke:#1B5E20,stroke-width:4px,color:#fff
+    style 階段3 fill:#2E7D32,stroke:#1B5E20,stroke-width:4px,color:#fff
     style 階段4 fill:#C2185B,stroke:#880E4F,stroke-width:4px,color:#fff
-    style 階段5 fill:#7B1FA2,stroke:#4A148C,stroke-width:4px,color:#fff
+    style 階段5 fill:#6D4C41,stroke:#4A148C,stroke-width:4px,color:#fff
 
-    style A1 fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:#fff
-    style A2 fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:#fff
-    style A3 fill:#2196F3,stroke:#1976D2,stroke-width:2px,color:#fff
+    style A1 fill:#2196F3,stroke:#0288D1,stroke-width:2px,color:#fff
+    style A2 fill:#2196F3,stroke:#0288D1,stroke-width:2px,color:#fff
+    style A3 fill:#2196F3,stroke:#0288D1,stroke-width:2px,color:#fff
 
     style B1 fill:#FB8C00,stroke:#F57C00,stroke-width:2px,color:#fff
     style B2 fill:#FB8C00,stroke:#F57C00,stroke-width:2px,color:#fff
     style B3A fill:#FB8C00,stroke:#F57C00,stroke-width:2px,color:#fff
     style B3B fill:#FB8C00,stroke:#F57C00,stroke-width:2px,color:#fff
 
-    style C1 fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
-    style C2 fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
-    style C3 fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
-    style C4 fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
+    style C1 fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style C2 fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style C3 fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
+    style C4 fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
 
     style D1 fill:#E91E63,stroke:#C2185B,stroke-width:2px,color:#fff
     style D2 fill:#E91E63,stroke:#C2185B,stroke-width:2px,color:#fff
     style D3 fill:#E91E63,stroke:#C2185B,stroke-width:2px,color:#fff
     style D4 fill:#E91E63,stroke:#C2185B,stroke-width:2px,color:#fff
 
-    style E1 fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff
-    style E2 fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff
-    style E3 fill:#9C27B0,stroke:#7B1FA2,stroke-width:2px,color:#fff
+    style E1 fill:#9C27B0,stroke:#6D4C41,stroke-width:2px,color:#fff
+    style E2 fill:#9C27B0,stroke:#6D4C41,stroke-width:2px,color:#fff
+    style E3 fill:#9C27B0,stroke:#6D4C41,stroke-width:2px,color:#fff
 </pre>
                 </div>
             </div>
@@ -1505,17 +2202,17 @@ graph TD
                         <div class="icon-grid">
                             <div style="text-align: center; padding: 20px;">
                                 <div style="font-size: 3em; margin-bottom: 10px;">🌅</div>
-                                <strong style="font-size: 1.3em;">早診</strong><br>
+                                <strong style="font-size: 1.3em;">早診</strong><br/>
                                 <span style="font-size: 1.1em;">09:30 - 12:59</span>
                             </div>
                             <div style="text-align: center; padding: 20px;">
                                 <div style="font-size: 3em; margin-bottom: 10px;">🌞</div>
-                                <strong style="font-size: 1.3em;">午診</strong><br>
+                                <strong style="font-size: 1.3em;">午診</strong><br/>
                                 <span style="font-size: 1.1em;">13:00 - 16:59</span>
                             </div>
                             <div style="text-align: center; padding: 20px;">
                                 <div style="font-size: 3em; margin-bottom: 10px;">🌙</div>
-                                <strong style="font-size: 1.3em;">晚診</strong><br>
+                                <strong style="font-size: 1.3em;">晚診</strong><br/>
                                 <span style="font-size: 1.1em;">17:00 - 21:00</span>
                             </div>
                         </div>
@@ -1550,24 +2247,33 @@ graph TD
 
                 <div class="diagram-box">
                     <div class="diagram-title">🧩 派號池組成結構</div>
-                    <pre class="mermaid">
-graph LR
-    A[📅 日期<br/>2025/10/15] --> KEY[🔑 派號池 Key]
-    B[🏪 門市<br/>中壢京都堂] --> KEY
-    C[🚪 診間<br/>診一] --> KEY
-    D[⏰ 時段<br/>午診] --> KEY
-    E[👤 會員<br/>王小明] --> KEY
-
-    KEY --> NUM[🔢 派號<br/>診一/午診/3]
-
-    style A fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style B fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style C fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style D fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style E fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style KEY fill:#7B1FA2,stroke:#4A148C,stroke-width:4px,color:#fff
-    style NUM fill:#E91E63,stroke:#C2185B,stroke-width:4px,color:#fff
-</pre>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 30px; padding: 40px; flex-wrap: wrap;">
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <div style="background: #0288D1; color: #fff; padding: 12px 25px; border-radius: 8px; border: 3px solid #0D47A1; text-align: center;">
+                                📅 日期<br>2025/10/15
+                            </div>
+                            <div style="background: #0288D1; color: #fff; padding: 12px 25px; border-radius: 8px; border: 3px solid #0D47A1; text-align: center;">
+                                🏪 門市<br>中壢京都堂
+                            </div>
+                            <div style="background: #0288D1; color: #fff; padding: 12px 25px; border-radius: 8px; border: 3px solid #0D47A1; text-align: center;">
+                                🚪 診間<br>診一
+                            </div>
+                            <div style="background: #0288D1; color: #fff; padding: 12px 25px; border-radius: 8px; border: 3px solid #0D47A1; text-align: center;">
+                                ⏰ 時段<br>午診
+                            </div>
+                            <div style="background: #0288D1; color: #fff; padding: 12px 25px; border-radius: 8px; border: 3px solid #0D47A1; text-align: center;">
+                                👤 會員<br>王小明
+                            </div>
+                        </div>
+                        <div style="color: var(--golden-sun); font-size: 32px; font-weight: 700;">→</div>
+                        <div style="background: #6D4C41; color: #fff; padding: 30px 40px; border-radius: 12px; border: 4px solid #4A148C; text-align: center; font-size: 1.4em; font-weight: 700;">
+                            🔑 派號池 Key
+                        </div>
+                        <div style="color: var(--golden-sun); font-size: 32px; font-weight: 700;">→</div>
+                        <div style="background: #E91E63; color: #fff; padding: 30px 40px; border-radius: 12px; border: 4px solid #C2185B; text-align: center; font-size: 1.4em; font-weight: 700;">
+                            🔢 派號<br>診一/午診/3
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -1650,7 +2356,7 @@ graph LR
                     <div class="rule-title" style="color: #f44336;">規則 5：離池後重新進池需重新派號 ⭐ 關鍵規則</div>
                 </div>
                 <div class="rule-desc">
-                    <strong style="color: #f44336;">判定條件：有效預約數 = 0</strong><br>
+                    <strong style="color: #f44336;">判定條件：有效預約數 = 0</strong><br/>
                     離池情境：跨日期、跨時段、跨診間、全部取消後再新增。重新進池時接續派號池最後號碼繼續派發
                 </div>
                 <div class="rule-details" style="background: rgba(244, 67, 54, 0.05);">
@@ -1686,198 +2392,413 @@ graph LR
                 </div>
             </div>
 
-            <div class="diagram-box" style="margin-top: 30px;">
-                <div class="diagram-title">🎯 判斷心法（關鍵邏輯）</div>
-                <pre class="mermaid">
-graph TD
-    Q[❓ 判斷問題] --> Q1{會員在派號池內<br/>是否曾出現<br/>有效預約數 = 0?}
-
-    Q1 -->|是| R1[❌ 離池]
-    Q1 -->|否| R2[✅ 未離池]
-
-    R1 --> A1[🔄 派號作廢<br/>重新派號]
-    R2 --> A2[📌 派號不變<br/>只搬位置]
-
-    A1 --> E1[接續派號池<br/>最後號碼繼續派發]
-    A2 --> E2[顯示在<br/>最早的有效預約上]
-
-    style Q fill:#607D8B,stroke:#37474F,stroke-width:3px,color:#fff
-    style Q1 fill:#8B2635,stroke:#5D1A23,stroke-width:4px,color:#fff
-    style R1 fill:#D32F2F,stroke:#B71C1C,stroke-width:3px,color:#fff
-    style R2 fill:#388E3C,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style A1 fill:#F44336,stroke:#D32F2F,stroke-width:2px,color:#fff
-    style A2 fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
-    style E1 fill:#FF5722,stroke:#E64A19,stroke-width:2px,color:#fff
-    style E2 fill:#66BB6A,stroke:#4CAF50,stroke-width:2px,color:#fff
-</pre>
-            </div>
-
-            <div class="diagram-box">
-                <div class="diagram-title">🔄 派號規則流程圖</div>
-                <pre class="mermaid">
-graph TD
-    START[📝 新增預約] --> CHECK{會員在此派號池<br/>是否已有派號?}
-    CHECK -->|有| KEEP[✅ 保留原派號]
-    CHECK -->|無| NEW[➕ 分配新派號]
-
-    KEEP --> UPDATE{是否為<br/>最早預約?}
-    UPDATE -->|是| SHOW[👁️ 顯示派號<br/>標記為主預約]
-    UPDATE -->|否| HIDE[👻 不顯示派號<br/>備用預約]
-
-    NEW --> ASSIGN[🔢 派發奇數號<br/>1,3,5,7...]
-    ASSIGN --> SHOW
-
-    CANCEL[🗑️ 取消預約] --> COUNT{有效預約數}
-    COUNT -->|= 0| LEAVE[❌ 離池<br/>派號作廢<br/>刪除會員池記錄]
-    COUNT -->|> 0| STAY[✅ 留在池內<br/>派號不變<br/>可能轉移顯示位置]
-
-    style START fill:#1976D2,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style CHECK fill:#607D8B,stroke:#37474F,stroke-width:3px,color:#fff
-    style NEW fill:#388E3C,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style KEEP fill:#7B1FA2,stroke:#4A148C,stroke-width:3px,color:#fff
-    style LEAVE fill:#D32F2F,stroke:#B71C1C,stroke-width:3px,color:#fff
-    style STAY fill:#388E3C,stroke:#1B5E20,stroke-width:3px,color:#fff
-    style UPDATE fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
-    style SHOW fill:#4CAF50,stroke:#388E3C,stroke-width:2px,color:#fff
-    style HIDE fill:#9E9E9E,stroke:#616161,stroke-width:2px,color:#fff
-    style ASSIGN fill:#66BB6A,stroke:#4CAF50,stroke-width:2px,color:#fff
-    style CANCEL fill:#FF5722,stroke:#E64A19,stroke-width:3px,color:#fff
-    style COUNT fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
-</pre>
-            </div>
         </div>
 
-        <!-- SECTION 4: 延展部署 -->
+        <!-- SECTION 4: 判斷與流程 -->
         <div class="section">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-icon">🚀</div>
-                    <div class="card-title">其他門市延展前置作業</div>
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">派號判斷與流程圖</div>
                 </div>
 
-                <div class="icon-grid">
-                    <div class="icon-card">
-                        <span class="icon-card-icon">⚡</span>
-                        <div class="icon-card-title">1. 預約觸發機制</div>
-                        <div class="icon-card-text" style="text-align: left; padding: 15px;">
-                            <p style="margin: 10px 0;">➕ <strong>新增預約：</strong>立即觸發派號邏輯判定</p>
-                            <p style="margin: 10px 0;">🔄 <strong>時間異動：</strong>檢查是否跨時段/診間</p>
-                            <p style="margin: 10px 0;">🗑️ <strong>刪除預約：</strong>檢查是否離池</p>
-                            <p style="margin: 10px 0;">⚠️ <strong>重要：</strong>所有操作必須即時同步</p>
-                        </div>
-                    </div>
-
-                    <div class="icon-card">
-                        <span class="icon-card-icon">💾</span>
-                        <div class="icon-card-title">2. 派號資料庫預算機制</div>
-                        <div class="icon-card-text" style="text-align: left; padding: 15px;">
-                            <p style="margin: 10px 0;">🏪 <strong>以門市為單位：</strong>分門市更新</p>
-                            <p style="margin: 10px 0;">🧮 <strong>預算邏輯：</strong>根據現有預約資料預先計算</p>
-                            <p style="margin: 10px 0;">📝 <strong>批次寫入：</strong>派號資料表</p>
-                            <p style="margin: 10px 0;">🔄 <strong>增量更新：</strong>後續維護</p>
-                        </div>
-                    </div>
-
-                    <div class="icon-card">
-                        <span class="icon-card-icon">📊</span>
-                        <div class="icon-card-title">3. 分階段更新策略</div>
-                        <div class="icon-card-text" style="text-align: left; padding: 15px;">
-                            <p style="margin: 10px 0;">✅ <strong>首站：</strong>中壢京都堂已上線</p>
-                            <p style="margin: 10px 0;">🔜 <strong>其他門市：</strong>依準備進度逐步開通</p>
-                            <p style="margin: 10px 0;">⚙️ <strong>前置作業：</strong>確認診間設定、時段定義完整</p>
-                            <p style="margin: 10px 0;">🧪 <strong>測試驗證：</strong>完整測試後才可開通</p>
-                        </div>
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div>
+                        <h4 style="font-weight: 700; margin-bottom: 15px;">關鍵邏輯視覺化</h4>
+                        <p style="line-height: 2;">
+                            以下圖表展示派號系統的核心判斷邏輯和完整流程，幫助您快速理解派號如何運作。
+                        </p>
                     </div>
                 </div>
 
-                <div class="alert warning" style="margin-top: 30px;">
-                    <div class="alert-icon">📋</div>
-                    <div style="width: 100%;">
-                        <h4 style="font-weight: 700; margin-bottom: 20px; font-size: 1.4em;">門市開通前檢查清單</h4>
-                        <div class="icon-grid">
-                            <div>
-                                <ul style="line-height: 2.2;">
-                                    <li>✅ 診間資料建立完成</li>
-                                    <li>✅ 時段定義設定完成</li>
-                                    <li>✅ 預約觸發機制測試通過</li>
-                                    <li>✅ 派號預算程式執行完成</li>
-                                </ul>
+            <div class="diagram-box" style="margin-top: 30px;">
+                <div class="diagram-title">🎯 判斷心法（關鍵邏輯）- 優化版</div>
+
+                <!-- 主判断流程 - 横向布局 -->
+                <div style="display: grid; grid-template-columns: auto auto auto 1fr; gap: 20px; align-items: center; justify-content: center; padding: 30px; max-width: 100%; overflow-x: auto;">
+
+                    <!-- 开始 -->
+                    <div style="background: #00897B; color: #fff; padding: 20px 30px; border-radius: 12px; border: 3px solid #37474F; text-align: center; min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                        <div style="font-size: 1.8em; margin-bottom: 5px;">🎯</div>
+                        <div style="font-size: 1.2em; font-weight: 700;">開始判斷</div>
+                    </div>
+
+                    <!-- 箭头 -->
+                    <div style="color: var(--golden-sun); font-size: 36px; font-weight: 700;">→</div>
+
+                    <!-- 决策点 -->
+                    <div style="background: #2E7D32; color: #fff; padding: 25px; border-radius: 50%; border: 5px solid #5D1A23; text-align: center; min-width: 180px; min-height: 180px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(139, 38, 53, 0.5);">
+                        <div>
+                            <div style="font-size: 1.1em; font-weight: 700; line-height: 1.5;">有效預約數<br/>是否曾為 0?</div>
+                        </div>
+                    </div>
+
+                    <!-- 分支路径 -->
+                    <div style="display: flex; flex-direction: column; gap: 30px; margin-left: 20px;">
+
+                        <!-- 是 - 离池路径 -->
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(90deg, rgba(244, 67, 54, 0.1) 0%, transparent 100%); border-radius: 12px;">
+                            <div style="background: #FF6B9D; color: #fff; padding: 5px 20px; border-radius: 20px; font-weight: 700; font-size: 1.1em; min-width: 100px; text-align: center; box-shadow: 0 3px 10px rgba(244, 67, 54, 0.4);">
+                                是 - 離池
                             </div>
-                            <div>
-                                <ul style="line-height: 2.2;">
-                                    <li>✅ 派號資料寫入資料庫確認</li>
-                                    <li>✅ 叫叫我系統整合測試</li>
-                                    <li>✅ 現場人員教育訓練完成</li>
-                                    <li>✅ 後台管理介面測試通過</li>
-                                </ul>
+                            <div style="color: #FF6B9D; font-size: 24px; font-weight: 700;">→</div>
+                            <div style="background: #FF6B9D; color: #fff; padding: 15px 25px; border-radius: 10px; border: 2px solid #E91E63; font-weight: 600; box-shadow: 0 3px 10px rgba(244, 67, 54, 0.3);">
+                                重新派號
+                            </div>
+                            <div style="color: #FF6B9D; font-size: 20px; font-weight: 700;">→</div>
+                            <div style="background: #FF6F00; color: #fff; padding: 15px 25px; border-radius: 10px; border: 2px solid #E64A19; font-weight: 600; box-shadow: 0 3px 10px rgba(255, 87, 34, 0.3);">
+                                接續派號池<br/>最後號碼繼續派發
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="diagram-box">
-                    <div class="diagram-title">💻 技術實作建議 - 派號預算程式執行邏輯</div>
-                    <div class="alert info">
-                        <div class="alert-icon">🔧</div>
-                        <div style="width: 100%;">
-                            <ol style="line-height: 2.5; padding-left: 25px; font-size: 1.1em;">
-                                <li><strong>讀取該門市所有有效預約</strong>
-                                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
-                                        <li>查詢資料庫中該門市的所有預約記錄</li>
-                                        <li>過濾出有效預約（未取消、未過期）</li>
-                                    </ul>
-                                </li>
-                                <li><strong>依派號池計算序號</strong>
-                                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
-                                        <li>按派號池（日期+門市+診間+時段+會員）分組</li>
-                                        <li>依 created_at 排序</li>
-                                        <li>分配奇數序號（1, 3, 5, 7...）</li>
-                                    </ul>
-                                </li>
-                                <li><strong>判定主預約</strong>
-                                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
-                                        <li>找出每個會員在派號池內最早的預約</li>
-                                        <li>標記為主預約</li>
-                                    </ul>
-                                </li>
-                                <li><strong>寫入派號資料表</strong>
-                                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
-                                        <li>記錄：會員 ID、派號池 Key、派號、主預約 ID</li>
-                                        <li>批次寫入資料庫</li>
-                                    </ul>
-                                </li>
-                                <li><strong>驗證資料正確性</strong>
-                                    <ul style="margin-left: 20px; margin-top: 10px; line-height: 2;">
-                                        <li>檢查序號連續性</li>
-                                        <li>確認主預約判定正確</li>
-                                        <li>驗證派號池獨立性</li>
-                                    </ul>
-                                </li>
-                            </ol>
+                        <!-- 否 - 留池路径 -->
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(90deg, rgba(76, 175, 80, 0.1) 0%, transparent 100%); border-radius: 12px;">
+                            <div style="background: #81C784; color: #fff; padding: 5px 20px; border-radius: 20px; font-weight: 700; font-size: 1.1em; min-width: 100px; text-align: center; box-shadow: 0 3px 10px rgba(76, 175, 80, 0.4);">
+                                否 - 留池
+                            </div>
+                            <div style="color: #81C784; font-size: 24px; font-weight: 700;">→</div>
+                            <div style="background: #81C784; color: #fff; padding: 15px 25px; border-radius: 10px; border: 2px solid #2E7D32; font-weight: 600; box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);">
+                                派號不變
+                            </div>
+                            <div style="color: #81C784; font-size: 20px; font-weight: 700;">→</div>
+                            <div style="background: #66BB6A; color: #fff; padding: 15px 25px; border-radius: 10px; border: 2px solid #81C784; font-weight: 600; box-shadow: 0 3px 10px rgba(102, 187, 106, 0.3);">
+                                顯示在<br/>最早的有效預約上
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
-                <div class="diagram-box">
-                    <div class="diagram-title">📊 分階段導入時程</div>
-                    <pre class="mermaid">
-gantt
-    title 門市導入規劃
-    dateFormat YYYY-MM-DD
-    section 第一階段
-    中壢京都堂 :done, phase1, 2025-09-01, 2025-09-10
-    section 第二階段
-    其他門市評估 :active, phase2, 2025-09-11, 30d
-    section 第三階段
-    第二站導入 :phase3, after phase2, 45d
-    section 第四階段
-    全面推廣 :phase4, after phase3, 60d
-</pre>
+                <!-- 说明文字 -->
+                <div style="margin-top: 30px; padding: 20px; background: rgba(255, 213, 79, 0.1); border-left: 4px solid var(--gold); border-radius: 8px;">
+                    <div style="color: var(--golden-sun); font-weight: 700; font-size: 1.2em; margin-bottom: 10px;">💡 核心判斷標準</div>
+                    <div style="color: var(--text-light); line-height: 1.8; font-size: 1.05em;">
+                        會員在派號池內是否曾出現「有效預約數 = 0」的時間點，這是決定是否需要重新派號的唯一標準。
+                    </div>
                 </div>
+            </div>
+
+            <div class="diagram-box">
+                <div class="diagram-title">🔄 派號規則流程圖（新增預約）- 優化版</div>
+
+                <div style="display: grid; grid-template-columns: auto auto auto 1fr; gap: 20px; align-items: center; justify-content: center; padding: 30px; max-width: 100%; overflow-x: auto;">
+
+                    <!-- 开始 -->
+                    <div style="background: #0288D1; color: #fff; padding: 20px 30px; border-radius: 12px; border: 3px solid #0D47A1; text-align: center; min-width: 120px; box-shadow: 0 4px 12px rgba(25, 118, 210, 0.4);">
+                        <div style="font-size: 1.8em; margin-bottom: 5px;">➕</div>
+                        <div style="font-size: 1.2em; font-weight: 700;">新增預約</div>
+                    </div>
+
+                    <!-- 箭头 -->
+                    <div style="color: var(--golden-sun); font-size: 36px; font-weight: 700;">→</div>
+
+                    <!-- 决策点 -->
+                    <div style="background: #00897B; color: #fff; padding: 25px; border-radius: 50%; border: 5px solid #37474F; text-align: center; min-width: 180px; min-height: 180px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(96, 125, 139, 0.5);">
+                        <div style="font-size: 1.1em; font-weight: 700; line-height: 1.5;">是否已有<br/>派號?</div>
+                    </div>
+
+                    <!-- 分支路径 -->
+                    <div style="display: flex; flex-direction: column; gap: 30px; margin-left: 20px;">
+
+                        <!-- 無派號路径 -->
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(90deg, rgba(56, 142, 60, 0.1) 0%, transparent 100%); border-radius: 12px;">
+                            <div style="background: #2E7D32; color: #fff; padding: 5px 20px; border-radius: 20px; font-weight: 700; font-size: 1.1em; min-width: 80px; text-align: center; box-shadow: 0 3px 10px rgba(56, 142, 60, 0.4);">
+                                無
+                            </div>
+                            <div style="color: #2E7D32; font-size: 24px; font-weight: 700;">→</div>
+                            <div style="background: #2E7D32; color: #fff; padding: 15px 25px; border-radius: 10px; border: 3px solid #1B5E20; font-weight: 600; box-shadow: 0 3px 10px rgba(56, 142, 60, 0.3);">
+                                分配新派號<br/>奇數號 1,3,5,7...
+                            </div>
+                            <div style="color: #2E7D32; font-size: 20px; font-weight: 700;">→</div>
+                            <div style="background: #81C784; color: #fff; padding: 15px 25px; border-radius: 10px; border: 2px solid #2E7D32; font-weight: 600; box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);">
+                                顯示派號
+                            </div>
+                        </div>
+
+                        <!-- 有派號路径 -->
+                        <div style="padding: 15px; background: linear-gradient(90deg, rgba(96, 125, 139, 0.1) 0%, transparent 100%); border-radius: 12px;">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                                <div style="background: #6D4C41; color: #fff; padding: 5px 20px; border-radius: 20px; font-weight: 700; font-size: 1.1em; min-width: 80px; text-align: center; box-shadow: 0 3px 10px rgba(123, 31, 162, 0.4);">
+                                    有
+                                </div>
+                                <div style="color: #6D4C41; font-size: 24px; font-weight: 700;">→</div>
+                                <div style="background: #00897B; color: #fff; padding: 15px 20px; border-radius: 50%; border: 3px solid #37474F; text-align: center; min-width: 120px; min-height: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(96, 125, 139, 0.4);">
+                                    <div style="font-size: 1em; font-weight: 700;">是否為<br/>最早預約?</div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 15px; margin-left: 140px;">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="background: #81C784; color: #fff; padding: 3px 15px; border-radius: 15px; font-weight: 700; font-size: 1em; min-width: 50px; text-align: center;">是</div>
+                                    <div style="color: #81C784; font-size: 20px; font-weight: 700;">→</div>
+                                    <div style="background: #81C784; color: #fff; padding: 12px 20px; border-radius: 8px; border: 2px solid #2E7D32; font-weight: 600; box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);">
+                                        顯示派號
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div style="background: #9E9E9E; color: #fff; padding: 3px 15px; border-radius: 15px; font-weight: 700; font-size: 1em; min-width: 50px; text-align: center;">否</div>
+                                    <div style="color: #9E9E9E; font-size: 20px; font-weight: 700;">→</div>
+                                    <div style="background: #9E9E9E; color: #fff; padding: 12px 20px; border-radius: 8px; border: 2px solid #616161; font-weight: 600; box-shadow: 0 2px 8px rgba(158, 158, 158, 0.3);">
+                                        不顯示派號<br/>備用預約
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagram-box" style="margin-top: 20px;">
+                <div class="diagram-title">🔄 派號規則流程圖（取消預約）- 優化版</div>
+
+                <div style="display: grid; grid-template-columns: auto auto auto 1fr; gap: 20px; align-items: center; justify-content: center; padding: 30px; max-width: 100%; overflow-x: auto;">
+
+                    <!-- 开始 -->
+                    <div style="background: #FF6F00; color: #fff; padding: 20px 30px; border-radius: 12px; border: 3px solid #E64A19; text-align: center; min-width: 120px; box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);">
+                        <div style="font-size: 1.8em; margin-bottom: 5px;">✖️</div>
+                        <div style="font-size: 1.2em; font-weight: 700;">取消預約</div>
+                    </div>
+
+                    <!-- 箭头 -->
+                    <div style="color: var(--golden-sun); font-size: 36px; font-weight: 700;">→</div>
+
+                    <!-- 决策点 -->
+                    <div style="background: #00897B; color: #fff; padding: 25px; border-radius: 50%; border: 5px solid #37474F; text-align: center; min-width: 180px; min-height: 180px; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(96, 125, 139, 0.5);">
+                        <div style="font-size: 1.1em; font-weight: 700; line-height: 1.5;">有效預約數<br/>是否為 0?</div>
+                    </div>
+
+                    <!-- 分支路径 -->
+                    <div style="display: flex; flex-direction: column; gap: 30px; margin-left: 20px;">
+
+                        <!-- 等于0 - 离池路径 -->
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(90deg, rgba(211, 47, 47, 0.1) 0%, transparent 100%); border-radius: 12px;">
+                            <div style="background: #E91E63; color: #fff; padding: 5px 20px; border-radius: 20px; font-weight: 700; font-size: 1.1em; min-width: 100px; text-align: center; box-shadow: 0 3px 10px rgba(211, 47, 47, 0.4);">
+                                是 - 離池
+                            </div>
+                            <div style="color: #E91E63; font-size: 24px; font-weight: 700;">→</div>
+                            <div style="background: #E91E63; color: #fff; padding: 15px 25px; border-radius: 10px; border: 3px solid #B71C1C; font-weight: 600; box-shadow: 0 3px 10px rgba(211, 47, 47, 0.3);">
+                                派號作廢<br/>刪除會員記錄
+                            </div>
+                        </div>
+
+                        <!-- 大于0 - 留池路径 -->
+                        <div style="display: flex; align-items: center; gap: 15px; padding: 15px; background: linear-gradient(90deg, rgba(56, 142, 60, 0.1) 0%, transparent 100%); border-radius: 12px;">
+                            <div style="background: #2E7D32; color: #fff; padding: 5px 20px; border-radius: 20px; font-weight: 700; font-size: 1.1em; min-width: 100px; text-align: center; box-shadow: 0 3px 10px rgba(56, 142, 60, 0.4);">
+                                否 - 留池
+                            </div>
+                            <div style="color: #2E7D32; font-size: 24px; font-weight: 700;">→</div>
+                            <div style="background: #2E7D32; color: #fff; padding: 15px 25px; border-radius: 10px; border: 3px solid #1B5E20; font-weight: 600; box-shadow: 0 3px 10px rgba(56, 142, 60, 0.3);">
+                                派號不變<br/>可能轉移顯示位置
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
 
-        <!-- SECTION 5: 互动模拟器 -->
+        <!-- SECTION 5: 親手試試 -->
+        <div class="section">
+            <!-- 說明區 -->
+            <div class="card" style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(56, 142, 60, 0.05) 100%); border: 2px solid rgba(76, 175, 80, 0.3); text-align: center; padding: 50px 35px;">
+                <h2 style="font-size: 2.5em; color: #66BB6A; margin-bottom: 25px;">🎮 親手試試看！</h2>
+                <p style="font-size: 1.5em; line-height: 1.8; color: var(--text-light);">
+                    用簡單的互動體驗，了解預約派號怎麼運作<br/>
+                    <span style="color: #66BB6A; font-weight: 700;">就像玩遊戲一樣簡單！</span>
+                </p>
+            </div>
+
+            <!-- 互動模擬器 - 簡化版 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">👤</div>
+                    <div class="card-title">情境一：我來預約掛號</div>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div>
+                        <p style="font-size: 1.2em; line-height: 1.8;">
+                            假設您是<strong>王小明</strong>，要來京都堂看診。<br/>
+                            試著跟著下面的步驟，看看會拿到什麼號碼！
+                        </p>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <h3 style="font-size: 1.8em; color: var(--golden-sun); margin-bottom: 30px; text-align: center;">📋 預約資訊</h3>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 25px; margin: 30px 0;">
+                        <div style="text-align: center; padding: 25px; background: rgba(255, 213, 79, 0.1); border-radius: 15px;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">📅</div>
+                            <div style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 5px;">日期</div>
+                            <div style="font-size: 1.5em; color: var(--golden-sun); font-weight: 700;">2025/10/15</div>
+                        </div>
+
+                        <div style="text-align: center; padding: 25px; background: rgba(255, 213, 79, 0.1); border-radius: 15px;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">🏥</div>
+                            <div style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 5px;">門市</div>
+                            <div style="font-size: 1.5em; color: var(--golden-sun); font-weight: 700;">中壢京都堂</div>
+                        </div>
+
+                        <div style="text-align: center; padding: 25px; background: rgba(255, 213, 79, 0.1); border-radius: 15px;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">🚪</div>
+                            <div style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 5px;">診間</div>
+                            <div style="font-size: 1.5em; color: var(--golden-sun); font-weight: 700;">診一</div>
+                        </div>
+
+                        <div style="text-align: center; padding: 25px; background: rgba(255, 213, 79, 0.1); border-radius: 15px;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">⏰</div>
+                            <div style="font-size: 1.1em; color: var(--text-secondary); margin-bottom: 5px;">時段</div>
+                            <div style="font-size: 1.5em; color: var(--golden-sun); font-weight: 700;">午診 14:00</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin: 40px 0;">
+                        <button onclick="showResult('scenario1')" style="padding: 20px 60px; font-size: 1.5em; background: linear-gradient(135deg, #66BB6A 0%, #2E7D32 100%); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 5px 20px rgba(76, 175, 80, 0.4); transition: all 0.3s;">
+                            🎯 看看拿到什麼號碼！
+                        </button>
+                    </div>
+
+                    <div id="scenario1" style="display: none; margin-top: 40px; padding: 40px; background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(56, 142, 60, 0.1) 100%); border: 3px solid #66BB6A; border-radius: 20px; text-align: center; animation: fadeIn 0.5s;">
+                        <div style="font-size: 4em; margin-bottom: 20px;">🎉</div>
+                        <h3 style="font-size: 2.5em; color: #66BB6A; margin-bottom: 20px;">恭喜！您的號碼是：</h3>
+                        <div style="font-size: 5em; color: var(--golden-sun); font-weight: 900; margin: 30px 0;">
+                            診一/午診/1
+                        </div>
+                        <p style="font-size: 1.4em; color: var(--text-light); line-height: 2; margin-top: 30px;">
+                            ✅ 因為您是<strong style="color: #66BB6A;">第一個</strong>預約這個時段的人<br/>
+                            ✅ 所以拿到<strong style="color: #66BB6A;">第 1 號</strong><br/>
+                            ✅ 記住這個號碼，快到的時候會通知您！
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情境二 -->
+            <div class="card" style="margin-top: 40px;">
+                <div class="card-header">
+                    <div class="card-icon">👥</div>
+                    <div class="card-title">情境二：後面又來了一個人</div>
+                </div>
+
+                <div class="alert info">
+                    <div class="alert-icon">💡</div>
+                    <div>
+                        <p style="font-size: 1.2em; line-height: 1.8;">
+                            現在<strong>李小華</strong>也來預約<strong>同一天、同一個診間、同一個時段</strong>。<br/>
+                            猜猜看她會拿到幾號？
+                        </p>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div style="text-align: center; margin: 40px 0;">
+                        <button onclick="showResult('scenario2')" style="padding: 20px 60px; font-size: 1.5em; background: linear-gradient(135deg, #42A5F5 0%, #0288D1 100%); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4); transition: all 0.3s;">
+                            🤔 她會拿到幾號？
+                        </button>
+                    </div>
+
+                    <div id="scenario2" style="display: none; margin-top: 40px; padding: 40px; background: linear-gradient(135deg, rgba(33, 150, 243, 0.15) 0%, rgba(25, 118, 210, 0.1) 100%); border: 3px solid #42A5F5; border-radius: 20px; text-align: center; animation: fadeIn 0.5s;">
+                        <div style="font-size: 4em; margin-bottom: 20px;">🎊</div>
+                        <h3 style="font-size: 2.5em; color: #42A5F5; margin-bottom: 20px;">李小華的號碼是：</h3>
+                        <div style="font-size: 5em; color: var(--golden-sun); font-weight: 900; margin: 30px 0;">
+                            診一/午診/3
+                        </div>
+                        <p style="font-size: 1.4em; color: var(--text-light); line-height: 2; margin-top: 30px;">
+                            💡 為什麼不是 2 號而是 3 號？<br/>
+                            ✅ 因為系統使用<strong style="color: #42A5F5;">奇數派號</strong>（1, 3, 5, 7...）<br/>
+                            ✅ 這樣可以和醫生的偶數號分開<br/>
+                            ✅ 王小明是 1 號，李小華就是 3 號！
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 情境三 -->
+            <div class="card" style="margin-top: 40px;">
+                <div class="card-header">
+                    <div class="card-icon">❓</div>
+                    <div class="card-title">情境三：如果王小明改時間呢？</div>
+                </div>
+
+                <div class="alert warning">
+                    <div class="alert-icon">🤔</div>
+                    <div>
+                        <p style="font-size: 1.2em; line-height: 1.8;">
+                            王小明想改到<strong>更早一點</strong>，從 14:00 改成 13:30。<br/>
+                            他的號碼會改變嗎？
+                        </p>
+                    </div>
+                </div>
+
+                <div class="scenario-card">
+                    <div style="text-align: center; margin: 40px 0;">
+                        <button onclick="showResult('scenario3')" style="padding: 20px 60px; font-size: 1.5em; background: linear-gradient(135deg, #FFA726 0%, #F57C00 100%); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 5px 20px rgba(255, 152, 0, 0.4); transition: all 0.3s;">
+                            🔄 號碼會變嗎？
+                        </button>
+                    </div>
+
+                    <div id="scenario3" style="display: none; margin-top: 40px; padding: 40px; background: linear-gradient(135deg, rgba(255, 152, 0, 0.15) 0%, rgba(245, 124, 0, 0.1) 100%); border: 3px solid #FFA726; border-radius: 20px; text-align: center; animation: fadeIn 0.5s;">
+                        <div style="font-size: 4em; margin-bottom: 20px;">✅</div>
+                        <h3 style="font-size: 2.5em; color: #FFA726; margin-bottom: 20px;">號碼不會變！</h3>
+                        <div style="font-size: 5em; color: var(--golden-sun); font-weight: 900; margin: 30px 0;">
+                            還是 診一/午診/1
+                        </div>
+                        <p style="font-size: 1.4em; color: var(--text-light); line-height: 2; margin-top: 30px;">
+                            💡 重要規則：<br/>
+                            ✅ 只要還在<strong style="color: #FFA726;">同一個時段</strong>（午診）<br/>
+                            ✅ 號碼就<strong style="color: #FFA726;">不會改變</strong><br/>
+                            ✅ 13:30 和 14:00 都算午診，所以還是 1 號<br/>
+                            ✅ 這樣您就不用擔心號碼一直變來變去！
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 總結 -->
+            <div class="card" style="margin-top: 40px; background: linear-gradient(135deg, rgba(255, 213, 79, 0.15) 0%, rgba(212, 117, 110, 0.1) 100%); border: 3px solid var(--gold);">
+                <div class="card-header" style="border: none;">
+                    <div class="card-icon">🎓</div>
+                    <div class="card-title">學到了什麼？</div>
+                </div>
+
+                <div style="font-size: 1.3em; line-height: 2.5; color: var(--text-light); padding: 20px;">
+                    <p style="margin: 20px 0;">
+                        ✅ <strong style="color: var(--golden-sun);">號碼依序派發：</strong>
+                        第一個人拿 1 號，第二個人拿 3 號，第三個人拿 5 號...
+                    </p>
+                    <p style="margin: 20px 0;">
+                        ✅ <strong style="color: var(--golden-sun);">號碼很穩定：</strong>
+                        拿到號碼後，只要在同一時段，號碼不會變
+                    </p>
+                    <p style="margin: 20px 0;">
+                        ✅ <strong style="color: var(--golden-sun);">每個時段獨立：</strong>
+                        早診、午診、晚診各有各的號碼，不會混在一起
+                    </p>
+                    <p style="margin: 20px 0;">
+                        ✅ <strong style="color: var(--golden-sun);">每個診間獨立：</strong>
+                        診一和診二的號碼也是分開的
+                    </p>
+                </div>
+            </div>
+
+            <!-- 想試試完整版？ -->
+            <div class="card" style="margin-top: 40px; text-align: center; padding: 50px;">
+                <h3 style="font-size: 2em; color: var(--golden-sun); margin-bottom: 25px;">🚀 想試試完整版的模擬器？</h3>
+                <p style="font-size: 1.3em; color: var(--text-light); margin-bottom: 30px;">
+                    可以自己輸入名字、時間，試試更複雜的情況
+                </p>
+                <button onclick="showSection(5)" style="padding: 20px 50px; font-size: 1.4em; background: linear-gradient(135deg, #6D4C41 0%, #4A148C 100%); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; box-shadow: 0 5px 20px rgba(123, 31, 162, 0.4); transition: all 0.3s;">
+                    進入完整模擬器 →
+                </button>
+            </div>
+        </div>
+
+        <!-- SECTION 6: 互动模拟器 -->
         <div class="section">
             <div class="simulator">
                 <div class="diagram-title">🎮 派號互動模擬器</div>
@@ -1888,7 +2809,13 @@ gantt
                 <div class="sim-form">
                     <div class="sim-input">
                         <label>👤 會員名稱</label>
-                        <input type="text" id="member" placeholder="輸入會員名稱">
+                        <select id="member">
+                            <option>王小明</option>
+                            <option>李小華</option>
+                            <option>張大偉</option>
+                            <option>陳美玲</option>
+                            <option>林志明</option>
+                        </select>
                     </div>
                     <div class="sim-input">
                         <label>🏪 門市</label>
@@ -1906,16 +2833,16 @@ gantt
                         </select>
                     </div>
                     <div class="sim-input">
-                        <label>⏰ 時段</label>
-                        <select id="period">
-                            <option value="早診">早診 (09:30-12:59)</option>
-                            <option value="午診">午診 (13:00-16:59)</option>
-                            <option value="晚診">晚診 (17:00-21:00)</option>
-                        </select>
+                        <label>🕐 時間</label>
+                        <input type="time" id="time" value="14:00" onchange="updatePeriod()">
                     </div>
                     <div class="sim-input">
-                        <label>🕐 時間</label>
-                        <input type="time" id="time" value="14:00">
+                        <label>⏰ 時段（自動判斷）</label>
+                        <select id="period" disabled style="background-color: #3a3a3a; cursor: not-allowed;">
+                            <option value="早診">早診 (09:30-12:59)</option>
+                            <option value="午診" selected>午診 (13:00-16:59)</option>
+                            <option value="晚診">晚診 (17:00-21:00)</option>
+                        </select>
                     </div>
                     <div class="sim-input">
                         <label>📅 日期</label>
@@ -1932,7 +2859,7 @@ gantt
             <div id="reservationList" style="margin-top: 30px;"></div>
         </div>
 
-        <!-- SECTION 6: 测试案例 -->
+        <!-- SECTION 7: 测试案例 -->
         <div class="section">
             <div class="card">
                 <div class="card-header">
@@ -2082,8 +3009,8 @@ gantt
                         <p><strong>💡 說明：</strong>不同診間 = 不同派號池，序號獨立計算，互不影響</p>
                         <p><strong>✅ 驗證規則：</strong>規則 4（派號池序列獨立）</p>
                         <p><strong>📊 兩個獨立派號池：</strong>
-                            <br>Pool 1: 2025/10/15 | 中壢 | 診一 | 午診 | 王小明
-                            <br>Pool 2: 2025/10/15 | 中壢 | 診二 | 午診 | 王小明
+                            <br/>Pool 1: 2025/10/15 | 中壢 | 診一 | 午診 | 王小明
+                            <br/>Pool 2: 2025/10/15 | 中壢 | 診二 | 午診 | 王小明
                         </p>
                     </div>
                 </div>
@@ -2109,6 +3036,60 @@ gantt
     </div>
 
     <script>
+        // ========================
+        // 🎨 主題切換系統
+        // ========================
+
+        // 初始化主題
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'tropical';
+            setTheme(savedTheme, false);
+        }
+
+        // 設置主題
+        function setTheme(theme, animate = true) {
+            const root = document.documentElement;
+            const body = document.body;
+
+            // 添加切換動畫
+            if (animate) {
+                body.classList.add('theme-switching');
+                setTimeout(() => {
+                    body.classList.remove('theme-switching');
+                }, 500);
+            }
+
+            // 設置主題屬性
+            root.setAttribute('data-theme', theme);
+
+            // 保存到本地存儲
+            localStorage.setItem('theme', theme);
+
+            // 更新按鈕狀態
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                if (btn.dataset.theme === theme) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // 觸發自定義事件
+            window.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+        }
+
+        // 綁定主題切換按鈕事件
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const theme = btn.dataset.theme;
+                    setTheme(theme);
+                });
+            });
+        });
+
         // 切换 Section
         function showSection(index) {
             document.querySelectorAll('.section').forEach((s, i) => {
@@ -2138,12 +3119,55 @@ gantt
             element.classList.toggle('active');
         }
 
+        // 親手試試 - 顯示情境結果
+        function showResult(scenarioId) {
+            const element = document.getElementById(scenarioId);
+            if (element) {
+                element.style.display = 'block';
+                // 平滑捲動到結果區域
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
+        }
+
         // 模拟器
         let reservations = [];
         let poolCounters = {};
         let memberPools = {};
 
         document.getElementById('date').valueAsDate = new Date();
+
+        // 根據時間自動判斷時段
+        function updatePeriod() {
+            const timeInput = document.getElementById('time').value;
+            if (!timeInput) return;
+
+            const [hours, minutes] = timeInput.split(':').map(Number);
+            const totalMinutes = hours * 60 + minutes;
+
+            const periodSelect = document.getElementById('period');
+
+            // 早診：09:30-12:59
+            if (totalMinutes >= 570 && totalMinutes < 780) {
+                periodSelect.value = '早診';
+            }
+            // 午診：13:00-16:59
+            else if (totalMinutes >= 780 && totalMinutes < 1020) {
+                periodSelect.value = '午診';
+            }
+            // 晚診：17:00-21:00
+            else if (totalMinutes >= 1020 && totalMinutes <= 1260) {
+                periodSelect.value = '晚診';
+            }
+            // 預設為午診
+            else {
+                periodSelect.value = '午診';
+            }
+        }
+
+        // 初始化時段
+        updatePeriod();
 
         function getPoolKey(store, room, period, date) {
             return `${date}|${store}|${room}|${period}`;
@@ -2252,7 +3276,7 @@ gantt
                             <div class="res-item ${cancelClass}">
                                 <div>
                                     <strong>👤 ${r.member}</strong> ${primaryBadge}
-                                    <br>🕐 ${r.time}
+                                    <br/>🕐 ${r.time}
                                 </div>
                                 ${badge}
                                 ${btn}
