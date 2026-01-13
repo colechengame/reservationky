@@ -528,6 +528,218 @@
             z-index: 1;
         }
 
+        /* 緊凑流程圖布局 */
+        .horizontal-flow {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            gap: 15px 10px;
+            max-width: 100%;
+        }
+
+        .flow-step {
+            width: 140px;
+            padding: 20px 12px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9em;
+            line-height: 1.3;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        /* 箭头样式 */
+        .flow-arrow {
+            font-size: 1.5em;
+            color: #666;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin: 0 3px;
+            transition: color 0.3s ease;
+        }
+
+        /* 深色模式下的箭頭 */
+        :root[data-theme="cyber"] .flow-arrow {
+            color: #888;
+        }
+
+        /* 换行标记 */
+        .flow-break {
+            flex-basis: 100%;
+            height: 0;
+        }
+
+        /* 流程步骤序号标记 */
+        .flow-step[data-step-number]::before {
+            content: attr(data-step-number);
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: 700;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 深色模式序号增强 */
+        :root[data-theme="cyber"] .flow-step[data-step-number]::before {
+            background: rgba(0, 0, 0, 0.6);
+            border-color: var(--cyber-cyan);
+            box-shadow: 0 0 15px var(--glow-cyan);
+        }
+
+        /* 可点击提示 - tooltip 样式 */
+        .flow-step[data-stage]::after {
+            content: '👆 點擊查看';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.85em;
+            opacity: 0;
+            transition: all 0.3s;
+            white-space: nowrap;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 8px 12px;
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .flow-step[data-stage]:hover::after {
+            opacity: 1;
+        }
+
+        .flow-step[data-stage]:hover .step-content {
+            opacity: 0.3;
+        }
+
+        /* 点击动画效果 */
+        .flow-step.clicked {
+            animation: clickPulse 0.5s ease;
+        }
+
+        @keyframes clickPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* 聚焦的阶段高亮效果 */
+        .accordion-item.focused {
+            position: relative;
+            z-index: 10;
+            animation: focusGlow 2s ease-in-out;
+        }
+
+        .accordion-item.focused::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--tropical-teal), var(--golden-sun), var(--tropical-green));
+            animation: rotateBorder 3s linear infinite;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); filter: hue-rotate(0deg); }
+            100% { transform: rotate(360deg); filter: hue-rotate(360deg); }
+        }
+
+        @keyframes focusGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.15); }
+        }
+
+        /* 深色模式下的聚焦效果 */
+        :root[data-theme="cyber"] .accordion-item.focused::before {
+            background: linear-gradient(135deg, var(--cyber-cyan), var(--cyber-pink), var(--cyber-purple));
+            box-shadow: 0 0 40px var(--glow-cyan), inset 0 0 20px var(--glow-purple);
+        }
+
+        .step-content {
+            width: 100%;
+            transition: opacity 0.3s ease;
+        }
+
+        .step-content small {
+            font-size: 0.8em;
+            opacity: 0.9;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* 簡化配色 - 按階段統一 */
+        /* 階段一：藍色系 */
+        .flow-prep {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            border: 2px solid #2E5C8A;
+        }
+
+        /* 階段二：橙色系 */
+        .flow-reserve,
+        .flow-assign,
+        .flow-sms {
+            background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+            border: 2px solid #E65100;
+        }
+
+        /* 階段三：綠色系 */
+        .flow-scan,
+        .flow-line,
+        .flow-checkin {
+            background: linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%);
+            border: 2px solid #388E3C;
+        }
+
+        /* 階段四：紫色系 */
+        .flow-wait,
+        .flow-call,
+        .flow-push {
+            background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
+            border: 2px solid #6A1B9A;
+        }
+
+        /* 階段五：深綠色系 */
+        .flow-enter,
+        .flow-treat,
+        .flow-complete {
+            background: linear-gradient(135deg, #43A047 0%, #388E3C 100%);
+            border: 2px solid #2E7D32;
+        }
+
+        /* 確保流程步驟文字在所有主題下都是白色 */
+        .flow-step,
+        .flow-step * {
+            color: white !important;
+        }
+
         /* 图标网格 */
         .icon-grid {
             display: grid;
@@ -729,8 +941,58 @@
         }
 
         .accordion-title {
-            font-size: 1.3em;
+            font-size: 1.5em;
             font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.4;
+        }
+
+        /* 阶段编号样式 */
+        .accordion-title .stage-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 80px;
+            padding: 8px 15px;
+            background: linear-gradient(135deg, var(--tropical-teal) 0%, var(--tropical-green) 100%);
+            color: white;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: 700;
+            box-shadow: 0 3px 10px rgba(0, 137, 123, 0.3);
+            flex-shrink: 0;
+        }
+
+        /* 阶段名称样式 */
+        .accordion-title .stage-name {
+            flex: 1;
+            color: var(--tropical-green);
+            font-size: 1em;
+        }
+
+        /* 深色模式下的阶段标题 */
+        :root[data-theme="cyber"] .accordion-title .stage-number {
+            background: linear-gradient(135deg, var(--cyber-cyan) 0%, var(--cyber-purple) 100%);
+            box-shadow: 0 3px 10px var(--glow-cyan);
+            color: white !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        :root[data-theme="cyber"] .accordion-title .stage-name {
+            color: var(--cyber-cyan);
+        }
+
+        /* 确保 timeline-dot 数字清晰可见 */
+        .timeline-dot {
+            color: white !important;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        :root[data-theme="cyber"] .timeline-dot {
+            color: white !important;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px var(--glow-cyan);
         }
 
         .accordion-icon {
@@ -1227,6 +1489,53 @@
             box-shadow: 0 0 15px var(--cyber-cyan);
         }
 
+
+        /* 流程步驟深色模式增強效果 */
+        :root[data-theme="cyber"] .flow-step {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+
+        :root[data-theme="cyber"] .flow-step:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5), 0 0 30px var(--glow-cyan);
+            transform: translateY(-5px) scale(1.05);
+        }
+
+        /* 各步驟深色模式發光效果 */
+        :root[data-theme="cyber"] .flow-start {
+            box-shadow: 0 4px 15px rgba(109, 76, 65, 0.4), 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+
+        :root[data-theme="cyber"] .flow-prep {
+            box-shadow: 0 4px 15px rgba(2, 136, 209, 0.4), 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+
+        :root[data-theme="cyber"] .flow-call {
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.5), 0 0 25px rgba(236, 72, 153, 0.5);
+        }
+
+        :root[data-theme="cyber"] .flow-complete {
+            box-shadow: 0 4px 15px rgba(46, 125, 50, 0.4), 0 0 20px rgba(129, 199, 132, 0.4);
+        }
+
+        /* 深色模式下的提示文字 */
+        :root[data-theme="cyber"] .flow-step[data-stage]::after {
+            background: linear-gradient(135deg, var(--cyber-purple) 0%, var(--cyber-cyan) 100%);
+            box-shadow: 0 0 20px var(--glow-cyan), 0 4px 12px rgba(0, 0, 0, 0.6);
+            color: white;
+        }
+
+        /* 深色模式下的流程图提示框 */
+        :root[data-theme="cyber"] .flow-hint {
+            background: rgba(139, 92, 246, 0.15) !important;
+            border-color: var(--cyber-purple) !important;
+            box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        :root[data-theme="cyber"] .flow-hint span {
+            color: var(--cyber-cyan) !important;
+            text-shadow: 0 0 10px var(--glow-cyan);
+        }
+
         /* 規則卡片深色版本 */
         :root[data-theme="cyber"] .rule-card {
             background: rgba(26, 26, 46, 0.85);
@@ -1347,6 +1656,13 @@
             color: var(--text-light) !important;
         }
 
+        /* 流程步驟卡片文字保持白色 */
+        :root[data-theme="cyber"] .flow-step,
+        :root[data-theme="cyber"] .flow-step * {
+            color: white !important;
+        }
+
+
         /* 強調文字和標籤 */
         :root[data-theme="cyber"] strong,
         :root[data-theme="cyber"] .label,
@@ -1391,10 +1707,10 @@
 <body>
     <!-- 主題切換按鈕 -->
     <div class="theme-toggle">
-        <button class="theme-btn active" data-theme="tropical" title="南洋熱帶風格">
+        <button class="theme-btn" data-theme="tropical" title="南洋熱帶風格">
             <span>🌴</span>
         </button>
-        <button class="theme-btn" data-theme="cyber" title="深色科幻風格">
+        <button class="theme-btn active" data-theme="cyber" title="深色科幻風格">
             <span>🚀</span>
         </button>
     </div>
@@ -1807,55 +2123,89 @@ graph TB
                     <div>
                         <h4 style="font-weight: 700; margin-bottom: 10px;">流程總覽</h4>
                         <p style="line-height: 1.8;">
-                            完整流程涵蓋<strong>前置準備、預約派號、客人報到、現場叫號、完成就診</strong>五大階段，<br/>
-                            並規劃<strong>兩階段實施計畫</strong>，逐步整合 NPOS 簡訊與叫叫我 LINE 自動報到功能。
+                            完整流程涵蓋<strong>前置準備、櫃檯取號、LINE登記報到、現場叫號、完成就診</strong>五大階段，<br/>
+                            客人到櫃檯拿到掛號號碼後，可用此號碼重新登記到 LINE 供線上叫號提醒。
                         </p>
                     </div>
                 </div>
 
                 <div class="diagram-box">
-                    <div class="diagram-title">🎯 全流程示意圖（左至右）</div>
-                    <pre class="mermaid" style="display: none;">
-graph LR
-    START([🏥 開始]) --> PREP[🏗️ 前置準備 排班建立]
-    PREP --> RESERVE[📱 預約派號 現場協助]
-    RESERVE --> ASSIGN[🔢 系統派號 奇數序號]
-    ASSIGN --> NOTIFY{通知方式}
+                    <div class="diagram-title">🎯 全流程示意圖（網格排列）</div>
+                    <div class="flow-hint" style="text-align: center; margin-bottom: 20px; padding: 10px; background: rgba(0, 137, 123, 0.1); border-radius: 10px; border: 1px dashed var(--tropical-teal);">
+                        <span style="font-size: 1.1em; font-weight: 600;">💡 提示：點擊任意流程步驟，即可快速跳转到對應的詳細階段說明</span>
+                    </div>
+                    <div class="horizontal-flow">
+                        <!-- 第一行 -->
+                        <div class="flow-step flow-prep" data-stage="0" data-step-number="1" onclick="jumpToStage(0)">
+                            <div class="step-content">🏗️<br>前置準備<br><small>排班建立</small></div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step flow-reserve" data-stage="1" data-step-number="2" onclick="jumpToStage(1)">
+                            <div class="step-content">🏥<br>客人到櫃檯<br><small>現場報到</small></div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step flow-assign" data-stage="1" data-step-number="3" onclick="jumpToStage(1)">
+                            <div class="step-content">📝<br>櫃檯掛號<br><small>系統派號</small></div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step flow-sms" data-stage="1" data-step-number="4" onclick="jumpToStage(1)">
+                            <div class="step-content">🎫<br>拿到號碼<br><small>診一/午診/3</small></div>
+                        </div>
 
-    NOTIFY -->|第一階段| SMS[📲 NPOS 簡訊]
-    NOTIFY -->|第二階段| LINE1[💬 LINE 報到]
+                        <!-- 换行 -->
+                        <div class="flow-break"></div>
+                        <div class="flow-arrow" style="transform: rotate(90deg);">↓</div>
+                        <div class="flow-break"></div>
 
-    SMS --> ARRIVE[👤 客人到院]
-    LINE1 --> SCAN[📱 掃描 QR Code]
+                        <!-- 第二行（反向）-->
+                        <div class="flow-step flow-checkin" data-stage="2" data-step-number="7" onclick="jumpToStage(2)">
+                            <div class="step-content">✅<br>報到成功<br><small>綁定LINE</small></div>
+                        </div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-step flow-line" data-stage="2" data-step-number="6" onclick="jumpToStage(2)">
+                            <div class="step-content">🔢<br>輸入號碼<br><small>LINE登記</small></div>
+                        </div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-step flow-scan" data-stage="2" data-step-number="5" onclick="jumpToStage(2)">
+                            <div class="step-content">📱<br>掃描QR Code<br><small>開啟LINE</small></div>
+                        </div>
 
-    SCAN --> CHECKIN[✅ LINE 報到成功]
-    CHECKIN --> WAIT[⏰ 等待叫號]
-    ARRIVE --> WAIT
+                        <!-- 换行 -->
+                        <div class="flow-break"></div>
+                        <div class="flow-arrow" style="transform: rotate(90deg);">↓</div>
+                        <div class="flow-break"></div>
 
-    WAIT --> CALL[📟 雲端叫號機]
-    CALL --> PUSH[🔔 LINE 推播通知]
+                        <!-- 第三行 -->
+                        <div class="flow-step flow-wait" data-stage="3" data-step-number="8" onclick="jumpToStage(3)">
+                            <div class="step-content">⏰<br>等待叫號<br><small>候診中</small></div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step flow-call" data-stage="3" data-step-number="9" onclick="jumpToStage(3)">
+                            <div class="step-content">📟<br>雲端叫號機<br><small>現場顯示</small></div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step flow-push" data-stage="3" data-step-number="10" onclick="jumpToStage(3)">
+                            <div class="step-content">🔔<br>LINE推播<br><small>叫號通知</small></div>
+                        </div>
 
-    PUSH --> ENTER[🚪 進入診間]
-    ENTER --> TREAT[👨‍⚕️ 接受診療]
-    TREAT --> COMPLETE([✅ 完成就診])
+                        <!-- 换行 -->
+                        <div class="flow-break"></div>
+                        <div class="flow-arrow" style="transform: rotate(90deg);">↓</div>
+                        <div class="flow-break"></div>
 
-    style START fill:#6D4C41,stroke:#4A148C,stroke-width:3px,color:#fff
-    style PREP fill:#0288D1,stroke:#0D47A1,stroke-width:3px,color:#fff
-    style RESERVE fill:#FB8C00,stroke:#F57C00,stroke-width:3px,color:#fff
-    style ASSIGN fill:#6D4C41,stroke:#4A148C,stroke-width:3px,color:#fff
-    style NOTIFY fill:#607D8B,stroke:#37474F,stroke-width:3px,color:#fff
-    style SMS fill:#FB8C00,stroke:#F57C00,stroke-width:2px,color:#fff
-    style LINE1 fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
-    style ARRIVE fill:#9E9E9E,stroke:#616161,stroke-width:2px,color:#fff
-    style SCAN fill:#81C784,stroke:#2E7D32,stroke-width:2px,color:#fff
-    style CHECKIN fill:#66BB6A,stroke:#81C784,stroke-width:2px,color:#fff
-    style WAIT fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
-    style CALL fill:#E91E63,stroke:#C2185B,stroke-width:3px,color:#fff
-    style PUSH fill:#FF5722,stroke:#E64A19,stroke-width:2px,color:#fff
-    style ENTER fill:#9C27B0,stroke:#6D4C41,stroke-width:2px,color:#fff
-    style TREAT fill:#9C27B0,stroke:#6D4C41,stroke-width:3px,color:#fff
-    style COMPLETE fill:#2E7D32,stroke:#1B5E20,stroke-width:3px,color:#fff
-</pre>
+                        <!-- 第四行（反向）-->
+                        <div class="flow-step flow-complete" data-stage="4" data-step-number="13" onclick="jumpToStage(4)">
+                            <div class="step-content">✅<br>完成就診<br><small>療程結束</small></div>
+                        </div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-step flow-treat" data-stage="4" data-step-number="12" onclick="jumpToStage(4)">
+                            <div class="step-content">👨‍⚕️<br>接受診療<br><small>中醫治療</small></div>
+                        </div>
+                        <div class="flow-arrow">←</div>
+                        <div class="flow-step flow-enter" data-stage="4" data-step-number="11" onclick="jumpToStage(4)">
+                            <div class="step-content">🚪<br>進入診間<br><small>依號就診</small></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="diagram-box" style="display: none;">
@@ -1931,7 +2281,10 @@ graph TD
             <div class="accordion">
                 <div class="accordion-item active">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title">🏗️ 階段一：前置準備作業</div>
+                        <div class="accordion-title">
+                            <span class="stage-number">🏗️ 階段一</span>
+                            <span class="stage-name">前置準備作業</span>
+                        </div>
                         <div class="accordion-icon">▼</div>
                     </div>
                     <div class="accordion-content">
@@ -1996,7 +2349,10 @@ graph TD
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title">📱 階段二：預約與派號作業（含第一階段實施）</div>
+                        <div class="accordion-title">
+                            <span class="stage-number">📱 階段二</span>
+                            <span class="stage-name">櫃檯報到與取號作業</span>
+                        </div>
                         <div class="accordion-icon">▼</div>
                     </div>
                     <div class="accordion-content">
@@ -2004,8 +2360,7 @@ graph TD
                             <div class="alert info">
                                 <div class="alert-icon">📝</div>
                                 <div>
-                                    <strong>摘要：</strong>現場人員協助預約 → 系統自動派號 →
-                                    <span class="badge badge-phase1">第一階段</span> NPOS 簡訊通知派號
+                                    <strong>摘要：</strong>客人到櫃檯報到 → 現場人員協助掛號 → 系統自動派號 → 客人拿到掛號號碼
                                 </div>
                             </div>
 
@@ -2013,8 +2368,8 @@ graph TD
                                 <div class="timeline-item">
                                     <div class="timeline-dot">4</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">步驟 4️⃣ 現場人員協助預約</div>
-                                        <div class="timeline-desc">現場人員（使用者）透過門診 On 系統協助客人預約</div>
+                                        <div class="timeline-title">步驟 4️⃣ 客人到櫃檯報到掛號</div>
+                                        <div class="timeline-desc">客人到櫃檯現場報到，現場人員協助掛號</div>
                                         <div class="timeline-details">
                                             <ul>
                                                 <li>📅 <strong>日期</strong>：選擇客人希望的就診日期</li>
@@ -2031,39 +2386,22 @@ graph TD
                                 <div class="timeline-item">
                                     <div class="timeline-dot">5</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">步驟 5️⃣ 系統自動派號</div>
-                                        <div class="timeline-desc">現場人員透過門診 On 預約順序自動產生</div>
+                                        <div class="timeline-title">步驟 5️⃣ 系統自動派號並給號</div>
+                                        <div class="timeline-desc">系統自動產生號碼，客人拿到掛號號碼</div>
                                         <div class="timeline-details">
                                             <ul>
                                                 <li>🧩 <strong>派號池</strong> = 日期+門市+診間+時段+會員</li>
                                                 <li>🔢 <strong>序號規則</strong>：派發奇數 1, 3, 5, 7...</li>
                                                 <li>📊 <strong>排序依據</strong>：依預約 created_at 時間排序</li>
                                                 <li>🏷️ <strong>顯示格式</strong>：診間對應的系統自動派號</li>
+                                                <li>🎫 <strong>客人拿號</strong>：客人拿到掛號號碼，可用於後續 LINE 登記</li>
                                             </ul>
                                             <div class="alert success" style="margin-top: 15px;">
                                                 <div class="alert-icon">💡</div>
                                                 <div style="text-align: center;">
-                                                    範例：<span class="highlight">診一/午診/3</span>
+                                                    範例：客人拿到號碼 <span class="highlight">診一/午診/3</span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="timeline-item">
-                                    <div class="timeline-dot">6</div>
-                                    <div class="timeline-content">
-                                        <div class="timeline-title">步驟 6️⃣ 第一階段：NPOS 簡訊通知</div>
-                                        <div class="timeline-desc">
-                                            <span class="badge badge-phase1">第一階段實施</span>
-                                        </div>
-                                        <div class="timeline-details">
-                                            <ul>
-                                                <li>📲 <strong>自動接入 NPOS</strong>：系統預約產生的派號自動接入</li>
-                                                <li>💬 <strong>預約簡訊發送</strong>：將派號資訊加入預約簡訊</li>
-                                                <li>📝 <strong>簡訊內容</strong>：包含日期、時段、診間、派號</li>
-                                                <li>✅ <strong>客人收到通知</strong>：客人透過簡訊得知派號資訊</li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -2074,7 +2412,10 @@ graph TD
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title">📲 階段三：到院報到作業（含第二階段規劃）</div>
+                        <div class="accordion-title">
+                            <span class="stage-number">📲 階段三</span>
+                            <span class="stage-name">LINE 登記與報到作業</span>
+                        </div>
                         <div class="accordion-icon">▼</div>
                     </div>
                     <div class="accordion-content">
@@ -2082,41 +2423,39 @@ graph TD
                             <div class="alert info">
                                 <div class="alert-icon">📝</div>
                                 <div>
-                                    <strong>摘要：</strong>
-                                    <span class="badge badge-phase2">第二階段</span> LINE 自動報到 → 客人到院掃描報到
+                                    <strong>摘要：</strong>客人用掛號號碼 → 重新登記到 LINE → 供線上叫號提醒
                                 </div>
                             </div>
 
                             <div class="timeline">
                                 <div class="timeline-item">
-                                    <div class="timeline-dot">7</div>
+                                    <div class="timeline-dot">6</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">步驟 7️⃣ 第二階段：LINE 自動報到（規劃中）</div>
-                                        <div class="timeline-desc">
-                                            <span class="badge badge-phase2">第二階段規劃</span>
-                                        </div>
+                                        <div class="timeline-title">步驟 6️⃣ 用掛號號碼登記 LINE</div>
+                                        <div class="timeline-desc">客人使用拿到的掛號號碼，重新登記到 LINE 系統</div>
                                         <div class="timeline-details">
                                             <ul>
-                                                <li>🔗 <strong>整合叫叫我短網址</strong>：每筆預約產生唯一短網址</li>
-                                                <li>📲 <strong>LINE 訊息推播</strong>：將短網址推播至 LINE</li>
-                                                <li>📱 <strong>客人點擊報到</strong>：客人點擊連結完成線上報到</li>
-                                                <li>✅ <strong>免到櫃檯掃描</strong>：遠端即可完成報到動作</li>
+                                                <li>🎫 <strong>持有號碼</strong>：客人持有櫃檯給的掛號號碼（例如：診一/午診/3）</li>
+                                                <li>📱 <strong>開啟 LINE</strong>：透過手機開啟 LINE App</li>
+                                                <li>📸 <strong>掃描 QR Code</strong>：掃描門市的 LINE 報到 QR Code</li>
+                                                <li>🔢 <strong>輸入號碼</strong>：在 LINE 中輸入掛號號碼進行登記</li>
+                                                <li>✅ <strong>綁定成功</strong>：號碼成功綁定至 LINE，可接收叫號通知</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="timeline-item">
-                                    <div class="timeline-dot">8</div>
+                                    <div class="timeline-dot">7</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">步驟 8️⃣ 客人到院掃描報到</div>
-                                        <div class="timeline-desc">客人到達現場進行報到</div>
+                                        <div class="timeline-title">步驟 7️⃣ LINE 系統確認報到</div>
+                                        <div class="timeline-desc">系統確認報到成功，開始提供線上叫號服務</div>
                                         <div class="timeline-details">
                                             <ul>
-                                                <li>📍 <strong>到達門市</strong>：客人抵達京都堂門市</li>
-                                                <li>📸 <strong>掃描 QR Code</strong>：現場掃描報到 QR Code</li>
-                                                <li>✅ <strong>報到成功</strong>：系統確認報到並更新狀態</li>
-                                                <li>📱 <strong>查詢派號</strong>：可隨時透過 LINE 查詢排隊狀況</li>
+                                                <li>✅ <strong>報到確認</strong>：系統確認客人已報到並綁定 LINE</li>
+                                                <li>📊 <strong>進入排隊</strong>：客人正式進入候診排隊序列</li>
+                                                <li>📱 <strong>即時查詢</strong>：可隨時透過 LINE 查詢目前叫號狀況</li>
+                                                <li>🔔 <strong>叫號提醒</strong>：系統會透過 LINE 推播叫號通知</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -2128,7 +2467,10 @@ graph TD
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title">📟 階段四：現場叫號作業</div>
+                        <div class="accordion-title">
+                            <span class="stage-number">📟 階段四</span>
+                            <span class="stage-name">現場叫號作業</span>
+                        </div>
                         <div class="accordion-icon">▼</div>
                     </div>
                     <div class="accordion-content">
@@ -2140,9 +2482,9 @@ graph TD
 
                             <div class="timeline">
                                 <div class="timeline-item">
-                                    <div class="timeline-dot">9</div>
+                                    <div class="timeline-dot">8</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">步驟 9️⃣ 雲端叫號系統運作</div>
+                                        <div class="timeline-title">步驟 8️⃣ 雲端叫號系統運作</div>
                                         <div class="timeline-desc">多管道同步叫號通知</div>
                                         <div class="timeline-details">
                                             <ul>
@@ -2162,7 +2504,10 @@ graph TD
 
                 <div class="accordion-item">
                     <div class="accordion-header" onclick="toggleAccordion(this)">
-                        <div class="accordion-title">✅ 階段五：完成就診</div>
+                        <div class="accordion-title">
+                            <span class="stage-number">✅ 階段五</span>
+                            <span class="stage-name">完成就診</span>
+                        </div>
                         <div class="accordion-icon">▼</div>
                     </div>
                     <div class="accordion-content">
@@ -2174,9 +2519,9 @@ graph TD
 
                             <div class="timeline">
                                 <div class="timeline-item">
-                                    <div class="timeline-dot">10</div>
+                                    <div class="timeline-dot">9</div>
                                     <div class="timeline-content">
-                                        <div class="timeline-title">步驟 🔟 客人完成就診</div>
+                                        <div class="timeline-title">步驟 9️⃣ 客人完成就診</div>
                                         <div class="timeline-desc">完成診療並更新系統狀態</div>
                                         <div class="timeline-details">
                                             <ul>
@@ -3042,7 +3387,7 @@ graph TD
 
         // 初始化主題
         function initTheme() {
-            const savedTheme = localStorage.getItem('theme') || 'tropical';
+            const savedTheme = localStorage.getItem('theme') || 'cyber';
             setTheme(savedTheme, false);
         }
 
@@ -3112,6 +3457,54 @@ graph TD
             } else {
                 item.classList.add('active');
             }
+        }
+
+        // ========================
+        // 🎯 流程图跳转到阶段
+        // ========================
+        function jumpToStage(stageIndex) {
+            // 切换到"我是員工"页面（Section 2）
+            showSection(2);
+
+            // 等待页面切换完成
+            setTimeout(() => {
+                const accordionItems = document.querySelectorAll('.accordion-item');
+
+                // 确保目标阶段存在
+                if (stageIndex >= 0 && stageIndex < accordionItems.length) {
+                    const targetItem = accordionItems[stageIndex];
+
+                    // 关闭所有其他阶段并移除聚焦效果
+                    accordionItems.forEach((item, index) => {
+                        if (index !== stageIndex) {
+                            item.classList.remove('active');
+                        }
+                        item.classList.remove('focused');
+                    });
+
+                    // 展开目标阶段
+                    targetItem.classList.add('active');
+
+                    // 平滑滚动到目标阶段
+                    setTimeout(() => {
+                        targetItem.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start',
+                            inline: 'nearest'
+                        });
+
+                        // 添加聚焦效果
+                        setTimeout(() => {
+                            targetItem.classList.add('focused');
+
+                            // 3秒后移除聚焦效果
+                            setTimeout(() => {
+                                targetItem.classList.remove('focused');
+                            }, 3000);
+                        }, 200);
+                    }, 100);
+                }
+            }, 300);
         }
 
         // 测试案例切换
