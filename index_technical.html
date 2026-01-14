@@ -867,55 +867,57 @@
 
                     <!-- Mermaid 完整流程圖 -->
                     <div class="info-box" style="background: #fff; padding: 20px; margin-bottom: 25px;">
-                        <h4 style="text-align: center; margin-bottom: 15px;">📊 系統完整流程圖（含角色互動）</h4>
+                        <h4 style="text-align: center; margin-bottom: 15px;">📊 系統完整流程圖（依據 rules.md 四、實際流程）</h4>
                         <pre class="mermaid">
 graph TD
-    subgraph S1[前一天 18:00]
-        A1[系統發送簡訊]
-        A2[客人收到虛擬號碼]
+    subgraph P1["4.2 號碼派發邏輯"]
+        A1["就診前一日 18:00<br>系統發送虛擬預約號碼簡訊"]
+        A2["客人可串連 LINE<br>查詢看診順序"]
         A1 --> A2
     end
 
-    subgraph S2[就診當天]
-        B1[客人到診所]
-        B2[櫃檯確認號碼]
-        B3[客人自由活動]
-        B1 --> B2 --> B3
+    subgraph P2["4.1 客人端流程"]
+        B1["客人到院"]
+        B2["掃描 QR Code"]
+        B3["透過 LINE 完成報到取號"]
+        B4["LINE 查看<br>目前號碼/等候狀態/叫號提醒"]
+        B1 --> B2 --> B3 --> B4
     end
 
-    subgraph S3[雲端叫號機互動]
-        C1[客人手機 LINE查詢]
-        C2[雲端叫號系統]
-        C3[診所螢幕/醫生叫號]
-        C1 --- C2 --- C3
+    subgraph P3["4.3 現場端流程"]
+        C1["雲端叫號機叫號<br>雙診同步"]
+        C2["LINE 推播通知客人"]
+        C3["客人依推播回到現場"]
+        C1 --> C2 --> C3
     end
 
-    subgraph S4[完成看診]
-        D1[系統發送叫號]
-        D2[醫生看診]
-        D3[客人完成]
-        D1 --> D2 --> D3
+    subgraph P4["4.4 後台端流程"]
+        D1["雲端後台管理介面"]
+        D2["即時查看排隊叫號狀況"]
+        D1 --- D2
     end
 
-    S1 --> S2 --> S3 --> S4
+    P1 --> P2
+    P2 --> P3
+    P4 -.-> P3
 
     style A1 fill:#FF6F00,color:#fff
     style A2 fill:#00897B,color:#fff
     style B1 fill:#00897B,color:#fff
-    style B2 fill:#C2185B,color:#fff
+    style B2 fill:#00897B,color:#fff
     style B3 fill:#00897B,color:#fff
-    style C1 fill:#1565C0,color:#fff
-    style C2 fill:#2E7D32,color:#fff
-    style C3 fill:#E65100,color:#fff
-    style D1 fill:#FF6F00,color:#fff
+    style B4 fill:#1565C0,color:#fff
+    style C1 fill:#E65100,color:#fff
+    style C2 fill:#FF6F00,color:#fff
+    style C3 fill:#00897B,color:#fff
+    style D1 fill:#5E35B1,color:#fff
     style D2 fill:#5E35B1,color:#fff
-    style D3 fill:#2E7D32,color:#fff
                         </pre>
                         <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.85em;">
                             <span style="background: #FF6F00; color: #fff; padding: 4px 10px; border-radius: 12px;">🤖 系統</span>
                             <span style="background: #00897B; color: #fff; padding: 4px 10px; border-radius: 12px;">👤 客人</span>
-                            <span style="background: #C2185B; color: #fff; padding: 4px 10px; border-radius: 12px;">👩‍💼 櫃檯</span>
-                            <span style="background: #5E35B1; color: #fff; padding: 4px 10px; border-radius: 12px;">👨‍⚕️ 醫生</span>
+                            <span style="background: #E65100; color: #fff; padding: 4px 10px; border-radius: 12px;">🏥 現場</span>
+                            <span style="background: #5E35B1; color: #fff; padding: 4px 10px; border-radius: 12px;">☁️ 後台</span>
                         </div>
                     </div>
 
