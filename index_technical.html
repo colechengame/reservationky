@@ -733,19 +733,11 @@
         }
     </style>
     <!-- Mermaid JS -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <script>
         mermaid.initialize({
-            startOnLoad: true,
-            theme: 'base',
-            themeVariables: {
-                primaryColor: '#8B2635',
-                primaryTextColor: '#fff',
-                primaryBorderColor: '#C9A961',
-                lineColor: '#654321',
-                secondaryColor: '#2F5233',
-                tertiaryColor: '#F5F1E8'
-            }
+            startOnLoad: false,
+            theme: 'default'
         });
     </script>
 </head>
@@ -1935,6 +1927,11 @@ graph TD
 
             event.target.classList.add('active');
             document.getElementById(tabName).classList.add('active');
+
+            // 切換到完整流程時重新渲染 Mermaid
+            if (tabName === 'flow') {
+                mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+            }
         }
 
         // 測試案例切換
