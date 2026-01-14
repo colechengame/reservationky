@@ -732,6 +732,22 @@
             }
         }
     </style>
+    <!-- Mermaid JS -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            themeVariables: {
+                primaryColor: '#8B2635',
+                primaryTextColor: '#fff',
+                primaryBorderColor: '#C9A961',
+                lineColor: '#654321',
+                secondaryColor: '#2F5233',
+                tertiaryColor: '#F5F1E8'
+            }
+        });
+    </script>
 </head>
 <body>
     <div class="container">
@@ -856,6 +872,61 @@
             <div id="flow" class="tab-content">
                 <div class="section">
                     <h2>🔄 從預約到派號完整流程</h2>
+
+                    <!-- Mermaid 完整流程圖 -->
+                    <div class="info-box" style="background: #fff; padding: 20px; margin-bottom: 25px;">
+                        <h4 style="text-align: center; margin-bottom: 15px;">📊 系統完整流程圖（含角色互動）</h4>
+                        <div class="mermaid">
+flowchart TB
+    subgraph 前一天["📅 就診前一天 18:00"]
+        A1[🤖 系統自動發送簡訊<br>虛擬預約號碼]
+        A2[👤 客人收到簡訊<br>可串連LINE查詢]
+        A1 --> A2
+    end
+
+    subgraph 當天["📆 就診當天"]
+        B1[👤 客人到診所]
+        B2[👩‍💼 櫃檯確認號碼<br>取得正式號]
+        B3[👤 客人自由活動<br>不用現場等待]
+        B1 --> B2 --> B3
+    end
+
+    subgraph 叫號["☁️ 雲端叫號機互動"]
+        direction LR
+        C1[👤 客人手機<br>LINE即時查詢<br>接收推播通知]
+        C2[☁️ 雲端<br>叫號系統]
+        C3[🏥 診所現場<br>叫號螢幕顯示<br>👨‍⚕️醫生按鈕叫號]
+        C1 <--> C2 <--> C3
+    end
+
+    subgraph 完成["✅ 完成看診"]
+        D1[🤖 系統發送叫號通知]
+        D2[👨‍⚕️ 醫生看診]
+        D3[👤 客人完成就診]
+        D1 --> D2 --> D3
+    end
+
+    前一天 --> 當天 --> 叫號 --> 完成
+
+    style A1 fill:#FF6F00,color:#fff
+    style A2 fill:#00897B,color:#fff
+    style B1 fill:#00897B,color:#fff
+    style B2 fill:#C2185B,color:#fff
+    style B3 fill:#00897B,color:#fff
+    style C1 fill:#1565C0,color:#fff
+    style C2 fill:#2E7D32,color:#fff
+    style C3 fill:#E65100,color:#fff
+    style D1 fill:#FF6F00,color:#fff
+    style D2 fill:#5E35B1,color:#fff
+    style D3 fill:#2E7D32,color:#fff
+                        </div>
+                        <div style="margin-top: 15px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.85em;">
+                            <span style="background: #FF6F00; color: #fff; padding: 4px 10px; border-radius: 12px;">🤖 系統</span>
+                            <span style="background: #00897B; color: #fff; padding: 4px 10px; border-radius: 12px;">👤 客人</span>
+                            <span style="background: #C2185B; color: #fff; padding: 4px 10px; border-radius: 12px;">👩‍💼 櫃檯</span>
+                            <span style="background: #5E35B1; color: #fff; padding: 4px 10px; border-radius: 12px;">👨‍⚕️ 醫生</span>
+                        </div>
+                    </div>
 
                     <div class="info-box">
                         <h4>📋 流程總覽</h4>
