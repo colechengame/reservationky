@@ -1832,122 +1832,97 @@
                 <div class="diagram-title">🗺️ 完整流程圖（含雲端叫號機互動）</div>
                 <div style="padding: 15px;">
 
-                    <!-- 第一階段：預約前一天 -->
-                    <div style="margin-bottom: 12px;">
-                        <div style="background: #7B1FA2; color: #fff; padding: 6px 14px; border-radius: 15px; display: inline-block; font-weight: 700; font-size: 0.9em; margin-bottom: 8px;">📅 就診前一天 18:00</div>
-                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                            <div style="background: #9C27B0; color: #fff; padding: 10px 14px; border-radius: 8px; border: 2px solid #7B1FA2; text-align: center; flex: 1; min-width: 120px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #FF6F00; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">🤖系統</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">📱</div>
-                                <div style="font-size: 0.9em; font-weight: 700;">發送簡訊</div>
-                                <div style="font-size: 0.8em;">虛擬預約號碼</div>
+                    <!-- 角色索引 -->
+                    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; font-size: 0.8em;">
+                        <span style="background: #FF6F00; color: #fff; padding: 3px 10px; border-radius: 10px;">🤖 系統</span>
+                        <span style="background: #00897B; color: #fff; padding: 3px 10px; border-radius: 10px;">👤 客人</span>
+                        <span style="background: #C2185B; color: #fff; padding: 3px 10px; border-radius: 10px;">👩‍💼 櫃檯</span>
+                        <span style="background: #5E35B1; color: #fff; padding: 3px 10px; border-radius: 10px;">👨‍⚕️ 醫生</span>
+                    </div>
+
+                    <!-- 上方：前一日簡訊 -->
+                    <div style="text-align: center; margin-bottom: 12px;">
+                        <div style="background: #7B1FA2; color: #fff; padding: 8px 16px; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9em;">
+                            <span style="background: #FF6F00; padding: 2px 6px; border-radius: 6px; font-size: 0.75em;">🤖</span>
+                            📱 前一日 18:00 發送簡訊（虛擬預約號碼）
+                        </div>
+                        <div style="background: #FFF3E0; border: 1px solid #FFB74D; color: #E65100; padding: 6px 12px; border-radius: 8px; margin-top: 8px; font-size: 0.75em; display: inline-block;">
+                            💡 虛擬號碼可預先查詢順序，<strong>實際以現場取得的掛號號碼為準</strong>
+                        </div>
+                        <div style="color: #7B1FA2; font-size: 1.2em; margin-top: 6px;">↓</div>
+                    </div>
+
+                    <!-- 中間：圍繞式橫向流程 -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+
+                        <!-- 左側：客人端 -->
+                        <div style="background: #1565C0; color: #fff; padding: 12px; border-radius: 10px; text-align: center; min-width: 120px;">
+                            <div style="font-size: 1.3em; margin-bottom: 4px;">👤</div>
+                            <div style="font-weight: 700; font-size: 0.9em; margin-bottom: 6px;">客人端</div>
+                            <div style="font-size: 0.75em; line-height: 1.5;">
+                                到院報到<br>↓<br>掃 QR Code<br>↓<br>LINE 報到
                             </div>
-                            <div style="color: #9C27B0; font-size: 20px; font-weight: 700;">→</div>
-                            <div style="background: #8E24AA; color: #fff; padding: 10px 14px; border-radius: 8px; border: 2px solid #7B1FA2; text-align: center; flex: 1; min-width: 120px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #00897B; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">👤客人</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">🔗</div>
-                                <div style="font-size: 0.9em; font-weight: 700;">串連 LINE</div>
-                                <div style="font-size: 0.8em;">查詢看診順序</div>
+                        </div>
+
+                        <div style="color: #4CAF50; font-size: 1.3em; font-weight: 700;">⟷</div>
+
+                        <!-- 中央：雲端系統 -->
+                        <div style="background: #4CAF50; padding: 15px; border-radius: 50%; text-align: center; min-width: 90px; min-height: 90px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 3px 10px rgba(76,175,80,0.3);">
+                            <div style="font-size: 1.5em;">☁️</div>
+                            <div style="font-weight: 700; color: #fff; font-size: 0.75em;">雲端叫號</div>
+                        </div>
+
+                        <div style="color: #4CAF50; font-size: 1.3em; font-weight: 700;">⟷</div>
+
+                        <!-- 右側：現場端 -->
+                        <div style="background: #E65100; color: #fff; padding: 12px; border-radius: 10px; text-align: center; min-width: 120px;">
+                            <div style="font-size: 1.3em; margin-bottom: 4px;">🏥</div>
+                            <div style="font-weight: 700; font-size: 0.9em; margin-bottom: 6px;">現場端</div>
+                            <div style="font-size: 0.75em; line-height: 1.5;">
+                                叫號機叫號<br>↓<br>雙診同步<br>↓<br>螢幕顯示
                             </div>
                         </div>
                     </div>
 
-                    <!-- 向下箭頭 -->
-                    <div style="text-align: center; font-size: 20px; margin: 8px 0;">⬇️</div>
-
-                    <!-- 第二階段：就診當天 -->
-                    <div style="margin-bottom: 12px;">
-                        <div style="background: #1565C0; color: #fff; padding: 6px 14px; border-radius: 15px; display: inline-block; font-weight: 700; font-size: 0.9em; margin-bottom: 8px;">📆 就診當天</div>
-                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                            <div style="background: #1976D2; color: #fff; padding: 10px; border-radius: 8px; border: 2px solid #1565C0; text-align: center; flex: 1; min-width: 90px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #00897B; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">👤客人</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">🏥</div>
-                                <div style="font-size: 0.85em; font-weight: 700;">到診所</div>
-                                <div style="font-size: 0.75em;">櫃檯報到</div>
-                            </div>
-                            <div style="color: #1976D2; font-size: 18px; font-weight: 700;">→</div>
-                            <div style="background: #1E88E5; color: #fff; padding: 10px; border-radius: 8px; border: 2px solid #1565C0; text-align: center; flex: 1; min-width: 90px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #C2185B; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">👩‍💼櫃檯</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">🎫</div>
-                                <div style="font-size: 0.85em; font-weight: 700;">確認號碼</div>
-                                <div style="font-size: 0.75em;">取得正式號</div>
-                            </div>
-                            <div style="color: #1976D2; font-size: 18px; font-weight: 700;">→</div>
-                            <div style="background: #1565C0; color: #fff; padding: 10px; border-radius: 8px; border: 2px solid #0D47A1; text-align: center; flex: 1; min-width: 90px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #00897B; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">👤客人</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">☕</div>
-                                <div style="font-size: 0.85em; font-weight: 700;">自由活動</div>
-                                <div style="font-size: 0.75em;">不用傻等</div>
-                            </div>
+                    <!-- 重要步驟：取得正式號碼 -->
+                    <div style="text-align: center; margin-bottom: 12px;">
+                        <div style="background: #C2185B; color: #fff; padding: 8px 16px; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85em;">
+                            <span style="background: rgba(255,255,255,0.2); padding: 2px 6px; border-radius: 6px; font-size: 0.8em;">👩‍💼</span>
+                            🎫 櫃檯確認 → <strong>取得正式掛號號碼</strong>
                         </div>
                     </div>
 
-                    <!-- 向下箭頭 -->
-                    <div style="text-align: center; font-size: 20px; margin: 8px 0;">⬇️</div>
+                    <div style="text-align: center; color: #4CAF50; font-size: 1.2em; margin-bottom: 10px;">↓</div>
 
-                    <!-- 第三階段：雲端叫號機互動 -->
-                    <div style="margin-bottom: 12px;">
-                        <div style="background: #2E7D32; color: #fff; padding: 6px 14px; border-radius: 15px; display: inline-block; font-weight: 700; font-size: 0.9em; margin-bottom: 8px;">☁️ 雲端叫號機互動</div>
-                        <div style="background: #E8F5E9; border: 2px solid #4CAF50; border-radius: 10px; padding: 12px;">
-                            <div style="display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap;">
-                                <!-- 左側：客人操作 -->
-                                <div style="flex: 1; min-width: 140px;">
-                                    <div style="background: #43A047; color: #fff; padding: 6px 10px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 0.85em; margin-bottom: 8px;">👤 您的手機</div>
-                                    <div style="background: #2E7D32; color: #fff; padding: 8px; border-radius: 6px; text-align: center; margin-bottom: 6px; font-size: 0.85em;">
-                                        <span style="font-size: 16px;">📲</span> LINE 即時查詢
-                                    </div>
-                                    <div style="background: #388E3C; color: #fff; padding: 8px; border-radius: 6px; text-align: center; font-size: 0.85em;">
-                                        <span style="font-size: 16px;">🔔</span> 接收推播通知
-                                    </div>
-                                </div>
-                                <!-- 中間：雲端系統 -->
-                                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                                    <div style="color: #2E7D32; font-size: 18px; font-weight: 700;">⟷</div>
-                                    <div style="background: #2E7D32; color: #fff; padding: 8px; border-radius: 50%;">
-                                        <span style="font-size: 20px;">☁️</span>
-                                    </div>
-                                    <div style="color: #2E7D32; font-size: 18px; font-weight: 700;">⟷</div>
-                                </div>
-                                <!-- 右側：現場設備 -->
-                                <div style="flex: 1; min-width: 140px;">
-                                    <div style="background: #F57C00; color: #fff; padding: 6px 10px; border-radius: 6px; text-align: center; font-weight: 700; font-size: 0.85em; margin-bottom: 8px;">🏥 診所現場</div>
-                                    <div style="background: #E65100; color: #fff; padding: 8px; border-radius: 6px; text-align: center; margin-bottom: 6px; font-size: 0.85em;">
-                                        <span style="font-size: 16px;">📟</span> 叫號螢幕顯示
-                                    </div>
-                                    <div style="background: #EF6C00; color: #fff; padding: 8px; border-radius: 6px; text-align: center; font-size: 0.85em;">
-                                        <span style="font-size: 16px;">👨‍⚕️</span> 醫生按鈕叫號
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- 下方：推播與完成 -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;">
+                        <div style="background: #FF6F00; color: #fff; padding: 6px 12px; border-radius: 15px; font-size: 0.8em; display: flex; align-items: center; gap: 4px;">
+                            <span style="font-size: 0.7em; background: rgba(255,255,255,0.2); padding: 1px 4px; border-radius: 4px;">🤖</span>
+                            🔔 LINE推播
+                        </div>
+                        <span style="color: #4CAF50; font-weight: 700;">→</span>
+                        <div style="background: #00897B; color: #fff; padding: 6px 12px; border-radius: 15px; font-size: 0.8em; display: flex; align-items: center; gap: 4px;">
+                            <span style="font-size: 0.7em; background: rgba(255,255,255,0.2); padding: 1px 4px; border-radius: 4px;">👤</span>
+                            回現場
+                        </div>
+                        <span style="color: #4CAF50; font-weight: 700;">→</span>
+                        <div style="background: #5E35B1; color: #fff; padding: 6px 12px; border-radius: 15px; font-size: 0.8em; display: flex; align-items: center; gap: 4px;">
+                            <span style="font-size: 0.7em; background: rgba(255,255,255,0.2); padding: 1px 4px; border-radius: 4px;">👨‍⚕️</span>
+                            🩺 看診
+                        </div>
+                        <span style="color: #4CAF50; font-weight: 700;">→</span>
+                        <div style="background: #2E7D32; color: #fff; padding: 6px 12px; border-radius: 15px; font-size: 0.8em; font-weight: 700;">
+                            ✅ 完成
                         </div>
                     </div>
 
-                    <!-- 向下箭頭 -->
-                    <div style="text-align: center; font-size: 20px; margin: 8px 0;">⬇️</div>
-
-                    <!-- 第四階段：完成看診 -->
-                    <div>
-                        <div style="background: #C62828; color: #fff; padding: 6px 14px; border-radius: 15px; display: inline-block; font-weight: 700; font-size: 0.9em; margin-bottom: 8px;">✅ 完成看診</div>
-                        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                            <div style="background: #C62828; color: #fff; padding: 10px 14px; border-radius: 8px; border: 2px solid #B71C1C; text-align: center; flex: 1; min-width: 100px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #FF6F00; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">🤖系統</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">🔔</div>
-                                <div style="font-size: 0.9em; font-weight: 700;">發送叫號</div>
-                            </div>
-                            <div style="color: #C62828; font-size: 20px; font-weight: 700;">→</div>
-                            <div style="background: #D32F2F; color: #fff; padding: 10px 14px; border-radius: 8px; border: 2px solid #B71C1C; text-align: center; flex: 1; min-width: 100px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #5E35B1; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">👨‍⚕️醫生</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">🩺</div>
-                                <div style="font-size: 0.9em; font-weight: 700;">看診</div>
-                            </div>
-                            <div style="color: #C62828; font-size: 20px; font-weight: 700;">→</div>
-                            <div style="background: #2E7D32; color: #fff; padding: 10px 14px; border-radius: 8px; border: 2px solid #1B5E20; text-align: center; flex: 1; min-width: 100px; position: relative;">
-                                <div style="position: absolute; top: -8px; right: -5px; background: #00897B; color: #fff; padding: 2px 6px; border-radius: 8px; font-size: 0.7em;">👤客人</div>
-                                <div style="font-size: 20px; margin-bottom: 4px;">🎉</div>
-                                <div style="font-size: 0.9em; font-weight: 700;">完成！</div>
-                            </div>
-                        </div>
+                    <!-- 後台管理 -->
+                    <div style="margin-top: 15px; border-top: 2px dashed #4CAF50; padding-top: 10px; text-align: center;">
+                        <span style="background: rgba(76,175,80,0.1); color: #2E7D32; padding: 5px 12px; border-radius: 12px; font-size: 0.8em;">
+                            ☁️ 後台雲端管理｜即時監控排隊與叫號狀況
+                        </span>
                     </div>
+                </div>
 
                 </div>
             </div>
